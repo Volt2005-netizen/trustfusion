@@ -95,22 +95,52 @@ Trained and benchmarked on a combined adversarial dataset of  4,200 profiles  (A
 *  Performance:  Achieves a  98.2% F1-Score  on multi-class profile fraud classification.
 
 ---
+## 🛠️ Project Structure & Module Ownership
 
-  🛠️ Project Structure & Module Ownership
+The project is organized into separate modules for data processing, multimodal analysis, explainable AI, backend services, and dashboard visualization.
 
+```text
 trustfusion/
+│
 ├── data/
-│   ├── raw/                  # Ayoobi  & Gulati datasets (4,200 profiles)
-│   └── processed/            # Scaled arrays, PCA matrices, pHash indices
+│   ├── raw/
+│   │   └── Ayoobi & Gulati datasets
+│   │       └── 4,200 profiles
+│   │
+│   └── processed/
+│       └── Scaled arrays, PCA matrices & pHash indices
+│
 ├── pipeline/
-│   ├── preprocess.py         # MinMax scaling  & Section Tag Embeddings (STE)
-│   ├── gate1_visual.py       # pHash  & Milvus vector search (Aadesh Lande)
-│   ├── gate2_linguistic.py   # RoBERTa + IAT/Shannon Entropy (Prathmesh Mulje)
-│   ├── gate3_relational.py   # PyG RGCN  & Louvain Graph clustering (Srushti Patil)
-│   └── fusion_classifier.py  # Cross-Modal Attention Gating + Ensembles (Vedang Sharnarthi)
+│   ├── preprocess.py
+│   │   └── Min-Max Scaling & Section Tag Embeddings (STE)
+│   │
+│   ├── gate1_visual.py
+│   │   └── pHash & Milvus Vector Search
+│   │       └── Owner: Aadesh Lande
+│   │
+│   ├── gate2_linguistic.py
+│   │   └── RoBERTa + IAT / Shannon Entropy
+│   │       └── Owner: Prathmesh Mulje
+│   │
+│   ├── gate3_relational.py
+│   │   └── PyG RGCN & Louvain Graph Clustering
+│   │       └── Owner: Srushti Patil
+│   │
+│   └── fusion_classifier.py
+│       └── Cross-Modal Attention Gating + Ensemble Models
+│           └── Owner: Vedang Sharnarth
+│
 ├── xai/
-│   ├── shap_explainer.py     # Text highlighting
-│   └── gnn_explainer.py      # Graph path isolation
+│   ├── shap_explainer.py
+│   │   └── Text Highlighting
+│   │
+│   └── gnn_explainer.py
+│       └── Graph Path Isolation
+│
 ├── backend/
-│   └── main.py               # FastAPI server endpoints
-└── dashboard/                # React.js + D3.js Moderator Console
+│   └── main.py
+│       └── FastAPI Server & API Endpoints
+│
+└── dashboard/
+    └── React.js + D3.js
+        └── Moderation Console
