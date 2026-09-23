@@ -116,19 +116,19 @@ trustfusion/
 │   │
 │   ├── gate1_visual.py
 │   │   └── pHash & Milvus Vector Search
-│   │       └── Owner: Aadesh Lande
+│   │       
 │   │
 │   ├── gate2_linguistic.py
 │   │   └── RoBERTa + IAT / Shannon Entropy
-│   │       └── Owner: Prathmesh Mulje
+│   │       
 │   │
 │   ├── gate3_relational.py
 │   │   └── PyG RGCN & Louvain Graph Clustering
-│   │       └── Owner: Srushti Patil
+│   │       
 │   │
 │   └── fusion_classifier.py
 │       └── Cross-Modal Attention Gating + Ensemble Models
-│           └── Owner: Vedang Sharnarth
+│           
 │
 ├── xai/
 │   ├── shap_explainer.py
