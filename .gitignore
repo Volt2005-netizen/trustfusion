@@ -216,3 +216,10 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# TrustFusion research datasets and generated data
+data/raw/
+data/processed/
+
+# IDE
+.vscode/

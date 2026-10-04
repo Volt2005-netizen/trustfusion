@@ -238,9 +238,8 @@ def flatten_to_text(value: Any, prefix: str = "") -> str:
 
 def extract_intro_text(value: Any) -> str:
     """
-    Intro is normally a small dict containing the six profile header fields.
-    Keep it as a clean section rather than treating the dict representation
-    as natural language.
+    Intro is normally a small dict containing the six profile header fields,
+    or a generated dictionary containing chatGPT options and metadata.
     """
     parsed = parse_structured_value(value)
 
@@ -259,7 +258,11 @@ def extract_intro_text(value: Any) -> str:
                 val = clean_scalar(parsed[key])
                 if val:
                     chunks.append(f"{key}: {val}")
-        return " | ".join(chunks)
+        if chunks:
+            return " | ".join(chunks)
+
+        # Fallback for synthetic / generated dictionaries (e.g. {'chatGPT': ..., 'random': ...})
+        return flatten_to_text(parsed, prefix="Intro")
 
     return clean_scalar(parsed)
 
@@ -601,12 +604,12 @@ def fit_minmax_and_save(
 
     scaler.fit(X_train)
 
-    X_train_scaled = scaler.transform(
-        X_train
+    X_train_scaled = np.clip(
+        scaler.transform(X_train), 0.0, 1.0
     ).astype(np.float32)
 
-    X_test_scaled = scaler.transform(
-        X_test
+    X_test_scaled = np.clip(
+        scaler.transform(X_test), 0.0, 1.0
     ).astype(np.float32)
 
     numerical_dir = output_dir / "numerical"

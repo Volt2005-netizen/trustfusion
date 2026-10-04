@@ -86,13 +86,18 @@ Unlike legacy single-modality filters, TrustFusion uses a  3-Gate Security Pipel
 
 ---
 
-  📊 Dataset  & Benchmarks
+  📊 Dataset & Experimental Setup
 
-Trained and benchmarked on a combined adversarial dataset of  4,200 profiles  (Ayoobi et al., ACM HT '23; Gulati et al., ASONAM '25):
+Curated adversarial research dataset combining LinkedIn profiles from Ayoobi et al. (ACM HT '23) and Gulati et al. (ASONAM '25):
 
-*  Dataset Split:  1,800 Legitimate, 600 Manual Fakes, 1,200 GPT-3.5 Fakes and 600 GPT-4-Turbo Adversarial Profiles.
-*  Classifier Ensemble:  XGBoost + CatBoost with Softmax Calibration.
-*  Performance:  Achieves a  98.2% F1-Score  on multi-class profile fraud classification.
+*  **Total Dataset Size:** 3,619 verified profiles
+*  **Class Distribution:**
+   * `0: Legitimate Profiles` — 1,800
+   * `1: Manual Fakes` — 599
+   * `2: ChatGPT Fakes` — 1,200
+   * `3: GPT-4 Adversarial` — 20
+*  **Partitioning Strategy:** Stratified 70/30 train/test split (2,533 train / 1,086 test) with zero cross-split profile ID or text leakage.
+*  **Pipeline Status:** Phase 1 & 2 (Ingestion, Preprocessing, and Anti-Leakage Scaling) implemented and validated; Phase 3 (3-Gate Security Pipeline) under active development.
 
 ---
 ## 🛠️ Project Structure & Module Ownership
@@ -141,6 +146,34 @@ trustfusion/
 │   └── main.py
 │       └── FastAPI Server & API Endpoints
 │
+├── tests/
+│   └── test_preprocessing.py
+│       └── Automated Unit Tests & Anti-Leakage Invariants
+│
 └── dashboard/
     └── React.js + D3.js
         └── Moderation Console
+```
+
+---
+
+## 🚀 Quickstart & Pipeline Verification
+
+### 1. Run Data Preprocessing
+Ingests raw datasets, validates schema, applies anti-leakage stratified 70/30 split, and outputs processed artifacts:
+```bash
+python pipeline/preprocess.py
+```
+
+### 2. Run Preprocessing Validation Report
+Verifies feature ranges, class distributions, zero profile-ID leakage, and zero text overlap across splits:
+```bash
+python pipeline/validate_preprocessing.py
+```
+
+### 3. Run Automated Unit Tests
+Executes the test suite verifying schema validation, structured parsing, count normalizers, and anti-leakage invariants:
+```bash
+python -m unittest discover tests -v
+```
+
