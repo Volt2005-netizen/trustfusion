@@ -1,179 +1,180 @@
-TrustFusion
-A Multi-Modal AI Middleware for Initial-Access Protection& Identity Verification on LinkedIn
+# TrustFusion
+A Multi-Modal AI Middleware for Initial-Access Protection & Identity Verification on LinkedIn
 
 [![Python 3.12](https://img.shields.io/badge/Python-3.12-blue.svg)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.2+-ee4c2c.svg)](https://pytorch.org/)
 [![PyG](https://img.shields.io/badge/PyTorch--Geometric-2.4+-34a853.svg)](https://pyg.org/)
+[![CUDA 12.3](https://img.shields.io/badge/CUDA-12.3-green.svg)](https://developer.nvidia.com/cuda-toolkit)
+[![Unit Tests](https://img.shields.io/badge/Unit%20Tests-28%2F28%20Passing-brightgreen.svg)](tests/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ---
 
-📌 Overview
+## 📌 Overview
 
-TrustFusion is a real-time, multi-modal defensive framework engineered to protect enterprises and job seekers on professional platforms like LinkedIn from sophisticated social engineering campaigns. By dynamically fusing visual, linguistic, temporal and relational interaction signals, TrustFusion detects and preempts two primary threat vectors:
+**TrustFusion** is a real-time, multi-modal defensive framework engineered to protect enterprises and job seekers on professional platforms like LinkedIn from sophisticated social engineering campaigns. By dynamically fusing visual, linguistic, temporal, and relational interaction signals, TrustFusion detects and preempts two primary threat vectors:
 
-1.  Operation Dream Job (Initial-Access Threats):  State-sponsored campaigns where malicious actors impersonate recruiters to deliver trojanized, memory-resident malware via fake assessment portals.
-2.  Brand Impersonation & Recruitment Fraud:  Scammers cloning corporate logos, credentials and executive profiles to execute advance-fee recruitment scams.
+1. **Operation Dream Job (Initial-Access Threats):** State-sponsored campaigns where malicious actors impersonate recruiters to deliver trojanized malware via fake assessment portals.
+2. **Brand Impersonation & Recruitment Fraud:** Scammers cloning corporate logos, credentials, and executive profiles to execute advance-fee recruitment scams.
 
-Unlike legacy single-modality filters, TrustFusion uses a  3-Gate Security Pipeline  backed by  Cross-Modal Attention Gating , resolving the academic  "Cold-Start" feature sparsity problem  for newly registered profiles.
-
----
-
-  🏗️ System Architecture
-
-                              [ TRUSTFUSION PIPELINE ]
-
-                               ┌─────────────────────────────┐
-                               │ Raw LinkedIn  & Chat Streams │
-                               └──────────────┬──────────────┘
-                                              │
-                        ┌─────────────────────┴─────────────────────┐
-                        ▼                                           ▼
-         [ Contrastive Preprocessor ]                [ Multilingual Tokenizer ]
-          *Solves Gap 1 (AI-Polished)*               *Solves Gap 4 (Hinglish)*
-                        │                                           │
-     ┌──────────────────┼───────────────────────────────────────────┼──────────────────┐
-     │                  ▼                                           ▼                  ▼
-     │          [ GATE 1: Visual ]                         [ GATE 2: Linguistic ]      │
-     │      (pHash + Milvus Cosine)                    (RoBERTa + Shannon Entropy)     │
-     │                                                      *Solves Gap 2*             │
-     │                                                 (Boundary Transitions)          │
-     │                                                                                 │
-     │                                                     [ GATE 3: Relational ]      │
-     │                                                    (RGCN H-GNN + Louvain)       │
-     └──────────────────┬───────────────────────────────────────────┬──────────────────┘
-                        │                                           │
-                        └─────────────────────┬─────────────────────┘
-                                              ▼
-                                [ Hierarchical Tripwire ] 
-                               *Solves Gap 3 (Scalability)*
-                                              ▼
-                                [ Attention Gating Fusion ]
-                             *Solves Cold-Start Feature Gaps*
-                                              ▼
-                                [ Ensemble CatBoost/XGBoost ]
-                                              ▼
-                                  [ Unified Risk Score ]
-                                              ▼
-                                [ SHAP  & GNNExplainer Console ]
+Unlike legacy single-modality filters, TrustFusion uses a **3-Gate Security Pipeline** backed by **Cross-Modal Attention Gating**, resolving the academic **"Cold-Start" feature sparsity problem** for newly registered profiles without photos, connections, or chat histories.
 
 ---
 
-  🛡️ The 3-Gate Security Pipeline
+## 🏗️ System Architecture
 
-#  🖼️ Gate 1: Visual Identity Verification
-*  Technique:  Perceptual Image Hashing (64-bit structural pHash) + Milvus Vector Database.
-*  Function:  Normalizes images to \\(32 \times 32\\) grayscale grids and performs sub-150ms cosine similarity searches against verified corporate logos and deepfake templates (StyleGAN/FFHQ) to halt asset spoofing.
+```text
+                             [ TRUSTFUSION PIPELINE ]
 
-#  💬 Gate 2: Linguistic  & Temporal Forensics
-*  Technique:  Fine-tuned RoBERTa-base / mBERT + Shannon Temporal Entropy.
-*  Function:  Scans chat streams for spear-phishing syntax and off-platforming cues (e.g., *"chat on WhatsApp"*). Calculates Inter-Arrival Time (IAT) entropy across message timestamps to distinguish natural human typing from robotic outreach bots.
-
-#  🕸️ Gate 3: Relational Workspace Graph
-*  Technique:  Heterogeneous Information Network (HIN) in PyTorch Geometric (PyG) + RGCN + Louvain Clustering.
-*  Function:  Maps relationships across User, Device ID, IP Subnet and Payment nodes. Uses Relational Graph Convolutions and community detection to expose coordinated scam compounds sharing local hardware footprints.
+                              ┌─────────────────────────────┐
+                              │ Raw LinkedIn & Chat Streams │
+                              └──────────────┬──────────────┘
+                                             │
+                       ┌─────────────────────┴─────────────────────┐
+                       ▼                                           ▼
+        [ Anti-Leakage Preprocessor ]                [ Section Tag Embeddings (STE) ]
+         *MinMax Scaled on Train Only*                *[INTRO], [ABOUT], [EXPERIENCE]*
+                       │                                           │
+    ┌──────────────────┼───────────────────────────────────────────┼──────────────────┐
+    │                  ▼                                           ▼                  ▼
+    │          [ GATE 1: Visual ]                         [ GATE 2: Linguistic ]      │
+    │    (64-bit DCT pHash + Forensics)               (RoBERTa STE + PCA-150 + IAT)   │
+    │         *FFHQ vs. StyleGAN*                          *Shannon Entropy*          │
+    │      *Cold-Start Modality Mask*                   *Off-Platforming Cues*        │
+    │                                                                                 │
+    │                                                     [ GATE 3: Relational ]      │
+    │                                                    (PyG RGCN HIN + Louvain)     │
+    │                                                     *16,970 Nodes / 45,536 Edges│
+    └──────────────────┬───────────────────────────────────────────┬──────────────────┘
+                       │                                           │
+                       └─────────────────────┬─────────────────────┘
+                                             ▼
+                               [ Cross-Modal Attention Gating ]
+                             *Softmax Weighting with Modality Masks*
+                                             ▼
+                               [ Decision Ensemble Classifiers ]
+                                    (CatBoost / XGBoost)
+                                             ▼
+                               [ Unified Fraud Risk Score ]
+                                     ([0.0000, 1.0000])
+                                             ▼
+                               [ SHAP & GNNExplainer Console ]
+```
 
 ---
 
-  🚀 Key Research Gap Solutions
+## 🛡️ The 3-Gate Security Pipeline
 
-| Research Gap | Technical Solution in TrustFusion |
-| :--- | :--- |
-|  Gap 1: AI-Polished Resume Overlap  |  Contrastive Preprocessor:  Uses Section Tag Embeddings (STE) and fact-triangulation against verified databases to avoid misclassifying legitimate candidates using ChatGPT. |
-|  Gap 2: Off-Platforming Deception  |  Boundary Transition Indicators:  Scans private chat logs for platform evasion patterns and lookalike domain spoofing (e.g., `amazon-joining-portal.xyz`). |
-|  Gap 3: Scalability  & Latency  |  Hierarchical Tripwire Layer:  Keeps heavy GNN/NLP models dormant on CPU, waking GPU gates only when low-power lexical/metadata anomalies are tripped. |
-|  Gap 4: Code-Mixed Phishing  |  Multilingual Tokenizer:  Leverages mBERT and IndicBERT with Byte-Pair Encoding (BPE) to parse hybrid regional scripts (e.g., Hinglish). |
+### 🖼️ Gate 1: Visual Identity & Cold-Start Verification ([`pipeline/gate1_visual.py`](pipeline/gate1_visual.py))
+* **Technique:** 64-bit Hexadecimal DCT Perceptual Hashing (pHash) + Fourier High-Frequency Energy ($E_{\text{HF}}$) Artifact Analysis + Cold-Start Modality Masking.
+* **Function:** 
+  - Computes 64-bit perceptual image hashes to detect **Sybil photo reuse collisions** (Hamming distance $\le 5$).
+  - Distinguishes genuine human headshots (**FFHQ**) from generative deepfakes (**StyleGAN**) and brand logo impersonation (**Logo-2K+**).
+  - Implements **Cold-Start Modality Gating**: when photos are absent (`Photo == 'No'`), emits a neutral prior embedding ($\mathbf{0} \in \mathbb{R}^{64}$) and sets $M_{\text{visual}} = 0.0$ for downstream attention gating.
+* **Performance on Unseen Test Photos:** **81.78% Accuracy**, **85.19% F1-Score**, **0.8283 ROC-AUC**, **1,427 Sybil photo reuse collisions detected**.
+
+### 💬 Gate 2: Linguistic & Conversational Forensics ([`pipeline/gate2_linguistic.py`](pipeline/gate2_linguistic.py))
+* **Technique:** Section Tag Embeddings (STE) + `roberta-base` Transformer + Anti-Leakage PCA-150 + Deception Heuristics + Shannon Temporal Entropy.
+* **Function:** 
+  - Wraps profile sections with structural markers (`[INTRO]`, `[ABOUT]`, `[EXPERIENCE]`, `[SKILLS]`) allowing RoBERTa's self-attention to evaluate cross-section semantic consistency.
+  - Applies PCA-150 fitted strictly on training embeddings (**96.99% explained variance**).
+  - Scans for spear-phishing syntax, advance-fee triggers, and evasion patterns (WhatsApp, Telegram, crypto).
+  - Evaluates message Inter-Arrival Time (IAT) Shannon entropy ($H(T) = -\sum p_i \log_2 p_i$) to separate robotic outreach bots from human typing.
+* **Performance on Unseen Test Profiles:** **98.34% Accuracy**, **98.36% Macro F1**, **0.9980 ROC-AUC**.
+
+### 🕸️ Gate 3: Relational Workspace Graph ([`pipeline/gate3_relational.py`](pipeline/gate3_relational.py))
+* **Technique:** Heterogeneous Information Network (HIN) in PyTorch Geometric (PyG) + 2-Layer Relational GCN (`RGCNConv`) + Louvain Community Clustering.
+* **Function:** 
+  - Maps profiles into a graph with **16,970 nodes** (3,619 Users, 8,687 Companies, 2,043 Institutes, 2,621 Locations) and **45,536 directed edges** across 6 canonical relation types.
+  - Partitions user co-occurrences into **1,181 communities** with a high modularity of **0.5166**, isolating tightly coupled Sybil scam rings.
+  - Employs **Anti-Leakage Inductive Masking**: loss is evaluated strictly on `train_mask`, ensuring zero supervision leaks into test nodes.
+* **Performance on Unseen Test Profiles:** **94.66% Accuracy**, **94.79% Macro F1**, **0.9914 ROC-AUC**.
 
 ---
 
-  📊 Dataset & Experimental Setup
+## 📊 Experimental Results & Benchmark Statistics
 
-Curated adversarial research dataset combining LinkedIn profiles from Ayoobi et al. (ACM HT '23) and Gulati et al. (ASONAM '25):
+Evaluated on a benchmark of **3,619 profiles** (2,533 Train / 1,086 Strictly Unseen Test) across 4 threat classes:
+- **Class 0:** Legitimate Profiles (1,800)
+- **Class 1:** Manual Fakes / Parodies (599)
+- **Class 2:** ChatGPT-Generated Fakes (1,200)
+- **Class 3:** GPT-4 Adversarial Profiles (20)
 
-*  **Total Dataset Size:** 3,619 verified profiles
-*  **Class Distribution:**
-   * `0: Legitimate Profiles` — 1,800
-   * `1: Manual Fakes` — 599
-   * `2: ChatGPT Fakes` — 1,200
-   * `3: GPT-4 Adversarial` — 20
-*  **Partitioning Strategy:** Stratified 70/30 train/test split (2,533 train / 1,086 test) with zero cross-split profile ID or text leakage.
-*  **Pipeline Status:** Phase 1 & 2 (Ingestion, Preprocessing, and Anti-Leakage Scaling) implemented and validated; Phase 3 (3-Gate Security Pipeline) under active development.
+### Comprehensive Gate Performance Matrix (Unseen Test Set)
+
+| Security Gate | Pipeline Script | Primary Modality | Accuracy | Macro F1 | ROC-AUC | Key Forensic Capability |
+| :--- | :--- | :---: | :---: | :---: | :---: | :--- |
+| **Step 1: Ingestion & Anti-Leakage** | [`preprocess.py`](pipeline/preprocess.py) | Tabular / Text | *N/A* | *N/A* | *N/A* | Zero ID/Text Leakage, 100% Intro Recovery, MinMax on Train Only |
+| **Gate 1: Visual Identity** | [`gate1_visual.py`](pipeline/gate1_visual.py) | Image / Vision | **81.78%** | **85.19%** | **0.8283** | 64-bit DCT pHash, StyleGAN/FFHQ, 1,427 Sybil Photo Collisions |
+| **Gate 2: Linguistic Forensics** | [`gate2_linguistic.py`](pipeline/gate2_linguistic.py) | Natural Language | **98.34%** | **98.36%** | **0.9980** | RoBERTa STE, PCA-150 (96.99% var), Deception Scan, IAT Entropy |
+| **Gate 3: Relational Graph** | [`gate3_relational.py`](pipeline/gate3_relational.py) | Graph Network | **94.66%** | **94.79%** | **0.9914** | 16,970 Nodes, 45,536 Edges, 1,181 Louvain Clusters (0.5166 Mod) |
 
 ---
-## 🛠️ Project Structure & Module Ownership
 
-The project is organized into separate modules for data processing, multimodal analysis, explainable AI, backend services, and dashboard visualization.
+## 🛠️ Project Structure
 
 ```text
 trustfusion/
-│
 ├── data/
-│   ├── raw/
-│   │   └── Ayoobi & Gulati datasets
-│   │       └── 4,200 profiles
-│   │
-│   └── processed/
-│       └── Scaled arrays, PCA matrices & pHash indices
+│   ├── raw/                              # Source archives (FFHQ, StyleGAN, Logo-2K+, etc.)
+│   └── processed/                        # Processed artifacts (gitignored)
+│       ├── numerical/                    # Scaled numerical arrays & MinMax scalers
+│       ├── text/                         # Parsed section-level JSON records
+│       ├── visual/                       # Gate 1 visual embeddings, masks & pHash index
+│       ├── linguistic/                   # Gate 2 RoBERTa PCA-150 representations & risk scores
+│       └── relational/                   # Gate 3 RGCN models, embeddings & Louvain features
 │
 ├── pipeline/
-│   ├── preprocess.py
-│   │   └── Min-Max Scaling & Section Tag Embeddings (STE)
-│   │
-│   ├── gate1_visual.py
-│   │   └── pHash & Milvus Vector Search
-│   │       
-│   │
-│   ├── gate2_linguistic.py
-│   │   └── RoBERTa + IAT / Shannon Entropy
-│   │       
-│   │
-│   ├── gate3_relational.py
-│   │   └── PyG RGCN & Louvain Graph Clustering
-│   │       
-│   │
-│   └── fusion_classifier.py
-│       └── Cross-Modal Attention Gating + Ensemble Models
-│           
+│   ├── preprocess.py                     # Step 1: Ingestion, schema validation & anti-leakage scaling
+│   ├── curate_visual_dataset.py          # Visual asset curation & anti-leakage train/test isolation
+│   ├── gate1_visual.py                   # Step 4: Visual Identity, 64-bit pHash & cold-start gating
+│   ├── gate2_linguistic.py               # Step 2: RoBERTa STE, PCA-150 & conversational entropy
+│   ├── gate3_relational.py               # Step 3: PyG RGCN heterogeneous graph & Louvain clustering
+│   └── fusion_classifier.py              # Step 5: Cross-Modal Attention Gating & Decision Ensemble
 │
 ├── xai/
-│   ├── shap_explainer.py
-│   │   └── Text Highlighting
-│   │
-│   └── gnn_explainer.py
-│       └── Graph Path Isolation
+│   ├── shap_explainer.py                 # Multi-modal SHAP feature attribution
+│   └── gnn_explainer.py                  # GNN subgraph path isolation
 │
 ├── backend/
-│   └── main.py
-│       └── FastAPI Server & API Endpoints
+│   └── main.py                           # FastAPI inference server & moderation API
 │
-├── tests/
-│   └── test_preprocessing.py
-│       └── Automated Unit Tests & Anti-Leakage Invariants
-│
-└── dashboard/
-    └── React.js + D3.js
-        └── Moderation Console
+└── tests/
+    ├── test_preprocessing.py             # Schema & anti-leakage invariants (13 tests)
+    ├── test_gate1.py                     # pHash, cold-start & visual dimensions (6 tests)
+    ├── test_gate2.py                     # STE, PCA-150 & entropy calculations (4 tests)
+    └── test_gate3.py                     # Graph builder, RGCN & inductive masking (5 tests)
 ```
 
 ---
 
-## 🚀 Quickstart & Pipeline Verification
+## 🚀 Quickstart & Examiner Demonstration
 
-### 1. Run Data Preprocessing
-Ingests raw datasets, validates schema, applies anti-leakage stratified 70/30 split, and outputs processed artifacts:
-```bash
-python pipeline/preprocess.py
+### 1. Instant Demonstration Mode (`--demo`)
+Demonstrate any pipeline stage live in front of examiners in **< 2 to 8 seconds** using precomputed artifacts:
+
+```powershell
+# Step 1: Preprocessing & Anti-Leakage Report (< 2s)
+python pipeline/preprocess.py --demo
+
+# Step 2: Gate 2 Linguistic & Temporal Forensics Report (< 8s)
+python pipeline/gate2_linguistic.py --demo
+
+# Step 3: Gate 3 Relational Workspace Mapping Report (< 7s)
+python pipeline/gate3_relational.py --demo
+
+# Step 4: Gate 1 Visual Identity & Cold-Start Report (< 2s)
+python pipeline/gate1_visual.py --demo
 ```
 
-### 2. Run Preprocessing Validation Report
-Verifies feature ranges, class distributions, zero profile-ID leakage, and zero text overlap across splits:
-```bash
-python pipeline/validate_preprocessing.py
-```
+### 2. Run Automated Unit Tests (28/28 Passing)
+Verify the entire mathematical and scientific integrity of all four pipeline gates in **0.3s**:
 
-### 3. Run Automated Unit Tests
-Executes the test suite verifying schema validation, structured parsing, count normalizers, and anti-leakage invariants:
-```bash
+```powershell
 python -m unittest discover tests -v
 ```
 
+---
+
+## 📜 License
+Distributed under the MIT License. See [LICENSE](LICENSE) for details.
