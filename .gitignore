@@ -223,3 +223,4 @@ data/processed/
 
 # IDE
 .vscode/
+catboost_info/
