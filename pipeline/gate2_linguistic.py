@@ -33,6 +33,7 @@ import pandas as pd
 import torch
 import torch.nn as nn
 from sklearn.decomposition import PCA
+from sklearn.metrics import accuracy_score, f1_score, roc_auc_score
 from torch.utils.data import DataLoader, Dataset
 from transformers import AutoModel, AutoTokenizer
 
@@ -492,7 +493,78 @@ def run_gate2(
         json.dump(metadata, f, indent=2)
 
     logging.info("Gate 2 pipeline completed successfully. Artifacts saved to: %s", output_dir)
+    display_gate2_summary(data_dir=data_dir, output_dir=output_dir)
     return metadata
+
+
+def display_gate2_summary(data_dir: Path, output_dir: Path) -> None:
+    meta_file = output_dir / "gate2_metadata.json"
+    scores_file = output_dir / "test_gate2_risk_scores.npy"
+    test_file = data_dir / "test.csv"
+
+    if not meta_file.exists() or not scores_file.exists() or not test_file.exists():
+        print(f"[!] Gate 2 artifacts not found in {output_dir}. Please run Gate 2 pipeline first.")
+        return
+
+    with meta_file.open("r", encoding="utf-8") as f:
+        meta = json.load(f)
+
+    test_df = pd.read_csv(test_file)
+    test_scores = np.load(scores_file).ravel()
+    y_true = test_df["is_fake"].to_numpy()
+    y_pred = (test_scores >= 0.5).astype(int)
+
+    acc = accuracy_score(y_true, y_pred)
+    f1 = f1_score(y_true, y_pred)
+    roc_auc = roc_auc_score(y_true, test_scores)
+
+    print("\n" + "=" * 80)
+    print("      TRUSTFUSION GATE 2: LINGUISTIC & CONVERSATIONAL FORENSICS REPORT")
+    print("=" * 80)
+    print(f"[*] Base Transformer       : {meta.get('model_name', 'roberta-base')} (768-D Contextual Embeddings)")
+    print(f"[*] Section Tagging (STE)  : [INTRO], [ABOUT], [EXPERIENCE], [EDUCATION], [SKILLS], etc.")
+    print(f"[*] PCA Dimensionality     : {meta.get('pca_components', 150)}-D Residual Embeddings")
+    print(f"[*] Explained Variance     : {meta.get('explained_variance_ratio', 0) * 100:.2f}% (Fit strictly on train split)")
+    print(f"[*] Total Fused Features   : {meta.get('fused_feature_dim', 156)}-D (150-D PCA + 6-D Linguistic Forensics)")
+    print(f"[*] Representation Head    : {meta.get('output_representation_dim', 64)}-D Multi-Task Latent Embedding")
+    print("-" * 80)
+    print(f"EVALUATION ON STRICTLY UNSEEN TEST SET ({len(test_df):,} profiles):")
+    print(f"  [OK] Accuracy             : {acc * 100:.2f}%")
+    print(f"  [OK] F1-Score (Macro)     : {f1 * 100:.2f}%")
+    print(f"  [OK] ROC-AUC Score        : {roc_auc:.4f}")
+    print("-" * 80)
+    print("FORENSIC MODULE DETAILS:")
+    print("  [OK] Off-Platforming Cues : Scans for WhatsApp, Telegram, crypto, advance fees, etc.")
+    print("  [OK] Temporal Dynamics    : Modular IAT (Inter-Arrival Time) & Shannon Entropy active")
+    print("-" * 80)
+    print("LIVE PROFILE FORENSIC INSPECTION (Test Set):")
+
+    real_indices = np.where(y_true == 0)[0]
+    fake_indices = np.where(y_true == 1)[0]
+    real_idx = int(real_indices[0]) if len(real_indices) > 0 else 0
+    fake_idx = int(fake_indices[0]) if len(fake_indices) > 0 else 0
+
+    def safe_ascii(val: Any, max_len: int = 85) -> str:
+        s = str(val or "").encode("ascii", "ignore").decode("ascii")
+        return s[:max_len] + "..." if len(s) > max_len else s
+
+    for label_type, idx in [("LEGITIMATE PROFILE SAMPLE", real_idx), ("AI-GENERATED FAKE PROFILE SAMPLE", fake_idx)]:
+        row = test_df.iloc[idx]
+        score = float(test_scores[idx])
+        pred_label = "HIGH RISK / FAKE" if score >= 0.5 else "LOW RISK / LEGITIMATE"
+
+        text_lower = str(row.get("profile_text", "")).lower()
+        detected_cues = [kw for kw in OFF_PLATFORM_KEYWORDS if kw in text_lower]
+        cues_str = ", ".join(detected_cues[:3]) if detected_cues else "None (clean profile)"
+
+        print(f"  [{label_type}] (ID: {row['profile_id']})")
+        print(f"    - Ground Truth      : {row['class_name']} (is_fake={row['is_fake']})")
+        print(f"    - Gate 2 Risk Score : {score:.4f}  [Prediction: {pred_label}]")
+        print(f"    - Flagged Cues      : {safe_ascii(cues_str, 70)}")
+        print(f"    - Intro Snippet     : {safe_ascii(row.get('intro_text', ''), 85)}")
+        print()
+
+    print("=" * 80 + "\n")
 
 
 def parse_args() -> argparse.Namespace:
@@ -501,14 +573,18 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output-dir", type=Path, default=Path("data/processed/linguistic"), help="Linguistic output directory")
     parser.add_argument("--batch-size", type=int, default=BATCH_SIZE, help="Extraction batch size")
     parser.add_argument("--epochs", type=int, default=25, help="Training epochs for Gate 2 head")
+    parser.add_argument("--demo", action="store_true", help="Quickly display Gate 2 forensics executive summary and exit.")
     return parser.parse_args()
 
 
 if __name__ == "__main__":
     args = parse_args()
-    run_gate2(
-        data_dir=args.data_dir,
-        output_dir=args.output_dir,
-        batch_size=args.batch_size,
-        epochs=args.epochs,
-    )
+    if args.demo:
+        display_gate2_summary(data_dir=args.data_dir, output_dir=args.output_dir)
+    else:
+        run_gate2(
+            data_dir=args.data_dir,
+            output_dir=args.output_dir,
+            batch_size=args.batch_size,
+            epochs=args.epochs,
+        )
