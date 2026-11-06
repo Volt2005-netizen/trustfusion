@@ -3,15 +3,16 @@ TrustFusion - Unit & Integration Tests for Step 7 FastAPI Serving Engine.
 
 Tests:
 1. GET  /health (System, GPU, and Model readiness)
-2. GET  /api/v1/profiles (Exemplar profiles and test set retrieval)
+2. GET  /api/v1/profiles (Exemplar profiles and candidate retrieval)
 3. GET  /api/v1/benchmarks (Ablation comparisons and metrics)
-4. POST /api/v1/predict (Legitimate profile prediction)
-5. POST /api/v1/predict (Fake recruitment bot prediction)
-6. POST /api/v1/predict (Cold-start dynamic visual masking alpha_vis == 0.0)
-7. POST /api/v1/explain (SHAP feature attribution and GNN paths)
-8. POST /api/v1/explain (404 on invalid profile)
-9. GET  /dashboard (Interactive HTML dashboard)
-10. GET / (Redirect to dashboard)
+4. GET  /api/v1/dataset-analysis (3,619-profile dataset statistics and threat analysis)
+5. POST /api/v1/predict (Legitimate profile prediction)
+6. POST /api/v1/predict (Fake recruitment bot prediction)
+7. POST /api/v1/predict (Cold-start dynamic visual masking alpha_vis == 0.0)
+8. POST /api/v1/explain (SHAP feature attribution and GNN paths)
+9. POST /api/v1/explain (404 on invalid profile)
+10. GET  /dashboard (Interactive HTML dashboard)
+11. GET / (Redirect to dashboard)
 """
 
 from __future__ import annotations
@@ -58,7 +59,7 @@ class TestBackendServingAPI(unittest.TestCase):
         self.assertGreater(data["benchmark_roc_auc"], 0.99)
 
     def test_02_list_profiles_and_exemplars(self):
-        """Verify GET /api/v1/profiles returns the 4 exemplar case studies."""
+        """Verify GET /api/v1/profiles returns the 4 exemplar case studies with human names."""
         response = self.client.get("/api/v1/profiles?limit=5")
         self.assertEqual(response.status_code, 200)
         data = response.json()
@@ -67,6 +68,10 @@ class TestBackendServingAPI(unittest.TestCase):
         exemplar_ids = [ex["profile_id"] for ex in data["exemplar_case_studies"]]
         self.assertIn("TF_ac29c8fbb6535468", exemplar_ids)
         self.assertIn("TF_ccd74509dfc347e4", exemplar_ids)
+        # Check human names are present
+        names = [ex["candidate_name"] for ex in data["exemplar_case_studies"]]
+        self.assertIn("Brett Bailey", names)
+        self.assertIn("Elizabeth Smith", names)
         self.assertEqual(data["total_test_profiles"], 1086)
         self.assertEqual(data["results_returned"], 5)
 
@@ -85,20 +90,38 @@ class TestBackendServingAPI(unittest.TestCase):
         self.assertIn("top_10_global_features", data)
         self.assertGreaterEqual(len(data["top_10_global_features"]), 10)
 
-    def test_04_predict_legitimate_profile(self):
+    def test_04_get_dataset_analysis(self):
+        """Verify GET /api/v1/dataset-analysis returns empirical 3,619-profile statistics."""
+        response = self.client.get("/api/v1/dataset-analysis")
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assertIn("overview", data)
+        self.assertEqual(data["overview"]["total_profiles_analyzed"], 3619)
+        self.assertEqual(data["overview"]["train_set_size"], 2533)
+        self.assertEqual(data["overview"]["test_set_size"], 1086)
+        self.assertIn("category_distribution", data)
+        self.assertEqual(len(data["category_distribution"]), 4)
+        self.assertIn("network_graph_topology", data)
+        self.assertEqual(data["network_graph_topology"]["total_entities_mapped"], 16970)
+        self.assertIn("key_forensic_discoveries", data)
+        self.assertGreaterEqual(len(data["key_forensic_discoveries"]), 4)
+
+    def test_05_predict_legitimate_profile(self):
         """Verify POST /api/v1/predict correctly identifies authentic executive profile."""
         payload = {"profile_id": "TF_ac29c8fbb6535468"}
         response = self.client.post("/api/v1/predict", json=payload)
         self.assertEqual(response.status_code, 200)
         data = response.json()
         self.assertEqual(data["profile_id"], "TF_ac29c8fbb6535468")
+        self.assertEqual(data["profile_name"], "Brett Bailey")
         self.assertFalse(data["is_fake"])
         self.assertEqual(data["triage_verdict"], "SAFE")
+        self.assertLess(data["threat_risk_score"], 0.15)
         self.assertLess(data["calibrated_risk_score"], 0.15)
         self.assertEqual(data["threat_attribution"]["class_label"], "Legitimate")
         self.assertGreater(data["latency_ms"], 0.0)
 
-    def test_05_predict_fake_recruiter_bot(self):
+    def test_06_predict_fake_recruiter_bot(self):
         """Verify POST /api/v1/predict catches ChatGPT recruitment scam bot."""
         payload = {"profile_id": "TF_ccd74509dfc347e4"}
         response = self.client.post("/api/v1/predict", json=payload)
@@ -107,10 +130,11 @@ class TestBackendServingAPI(unittest.TestCase):
         self.assertEqual(data["profile_id"], "TF_ccd74509dfc347e4")
         self.assertTrue(data["is_fake"])
         self.assertEqual(data["triage_verdict"], "HIGH_RISK")
+        self.assertGreater(data["threat_risk_score"], 0.90)
         self.assertGreater(data["calibrated_risk_score"], 0.90)
         self.assertEqual(data["threat_attribution"]["class_label"], "ChatGPT Bot")
 
-    def test_06_predict_cold_start_dynamic_masking(self):
+    def test_07_predict_cold_start_dynamic_masking(self):
         """Verify simulate_cold_start=True zeroes visual attention weight (alpha_vis == 0.0)."""
         payload = {
             "profile_id": "TF_ac29c8fbb6535468",
@@ -123,12 +147,10 @@ class TestBackendServingAPI(unittest.TestCase):
         self.assertTrue(gb["is_cold_start"])
         self.assertFalse(gb["visual_photo_present"])
         self.assertEqual(gb["alpha_vis"], 0.0)
-        # alpha_ling + alpha_rel should equal 1.0
         self.assertAlmostEqual(gb["alpha_ling"] + gb["alpha_rel"], 1.0, places=3)
-        self.assertIn("Cold-Start", data["cold_start_policy_applied"])
 
-    def test_07_explain_profile(self):
-        """Verify POST /api/v1/explain returns SHAP drivers, triggers, and GNN paths."""
+    def test_08_explain_profile(self):
+        """Verify POST /api/v1/explain returns human insights and forensic drivers."""
         payload = {
             "profile_id": "TF_ccd74509dfc347e4",
             "top_k": 5,
@@ -137,32 +159,30 @@ class TestBackendServingAPI(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         data = response.json()
         self.assertEqual(data["profile_id"], "TF_ccd74509dfc347e4")
+        self.assertIn("identified_threat_signals", data)
+        self.assertIn("trust_and_authenticity_signals", data)
         self.assertIn("top_risk_drivers", data)
-        self.assertIn("top_protective_factors", data)
-        self.assertIn("linguistic_triggers", data)
-        self.assertIn("gnn_subgraph", data)
-        self.assertGreaterEqual(len(data["top_risk_drivers"]), 1)
+        self.assertIn("network_analysis", data)
+        self.assertGreaterEqual(len(data["identified_threat_signals"]), 1)
 
-    def test_08_explain_invalid_profile_returns_404(self):
+    def test_09_explain_invalid_profile_returns_404(self):
         """Verify POST /api/v1/explain returns 404 for unknown profile ID."""
         payload = {"profile_id": "TF_NON_EXISTENT_PROFILE_99999"}
         response = self.client.post("/api/v1/explain", json=payload)
         self.assertEqual(response.status_code, 404)
 
-    def test_09_dashboard_html_view(self):
-        """Verify GET /dashboard returns responsive HTML dashboard."""
+    def test_10_dashboard_html_view(self):
+        """Verify GET /dashboard returns responsive HTML dashboard with user-friendly console."""
         response = self.client.get("/dashboard")
         self.assertEqual(response.status_code, 200)
         self.assertIn("text/html", response.headers["content-type"])
         text = response.text
         self.assertIn("TrustFusion", text)
-        self.assertIn("SOC LIVE", text)
-        self.assertIn("Forensic Triage Selector", text)
-        self.assertIn("Cross-Modal Attention Gating", text)
-        self.assertIn("SHAP Feature Attribution", text)
-        self.assertIn("Relational Graph", text)
+        self.assertIn("Candidate Verification", text)
+        self.assertIn("Dataset Intelligence", text)
+        self.assertIn("Multi-Signal Identity Verification", text)
 
-    def test_10_root_redirects_to_dashboard(self):
+    def test_11_root_redirects_to_dashboard(self):
         """Verify GET / redirects to /dashboard."""
         response = self.client.get("/", follow_redirects=False)
         self.assertEqual(response.status_code, 307)

@@ -5,18 +5,9 @@ Usage:
 ------
 1. Start the FastAPI Serving Backend (Terminal 1):
    python backend/main.py
-   # Or: uvicorn backend.main:app --port 8000
 
 2. Run the Streamlit Dashboard (Terminal 2):
    streamlit run dashboard.py
-
-Modules:
---------
-1. Real-Time Profile Moderation Console (Instant risk scoring, verdict badge, 4-class attribution).
-2. Cross-Modal Attention Gating & Cold-Start Simulator (Live attention gauges, photo removal toggle).
-3. SHAP Explainability Suite (Risk drivers vs. protective factors, text deception triggers).
-4. Relational Graph & Sybil Ring Explorer (2-hop computational subgraph, Sybil co-occurrence density).
-5. Global Benchmark Explorer (ROC-AUC, confusion matrix, standalone gate comparisons).
 """
 
 from __future__ import annotations
@@ -80,11 +71,11 @@ def fetch_profiles(limit: int = 4) -> list[dict[str, Any]]:
     return []
 
 
-def run_predict(profile_id: str, simulate_cold_start: bool = False) -> dict[str, Any] | None:
+def run_predict(profile_id: str) -> dict[str, Any] | None:
     try:
         r = requests.post(
             f"{API_BASE_URL}/api/v1/predict",
-            json={"profile_id": profile_id, "simulate_cold_start": simulate_cold_start},
+            json={"profile_id": profile_id},
             timeout=5.0,
         )
         if r.status_code == 200:
@@ -94,7 +85,7 @@ def run_predict(profile_id: str, simulate_cold_start: bool = False) -> dict[str,
     return None
 
 
-def run_explain(profile_id: str, top_k: int = 5) -> dict[str, Any] | None:
+def run_explain(profile_id: str, top_k: int = 4) -> dict[str, Any] | None:
     try:
         r = requests.post(
             f"{API_BASE_URL}/api/v1/explain",
@@ -108,9 +99,9 @@ def run_explain(profile_id: str, top_k: int = 5) -> dict[str, Any] | None:
     return None
 
 
-def fetch_benchmarks() -> dict[str, Any] | None:
+def fetch_dataset_analysis() -> dict[str, Any] | None:
     try:
-        r = requests.get(f"{API_BASE_URL}/api/v1/benchmarks", timeout=3.0)
+        r = requests.get(f"{API_BASE_URL}/api/v1/dataset-analysis", timeout=3.0)
         if r.status_code == 200:
             return r.json()
     except Exception:
@@ -120,175 +111,178 @@ def fetch_benchmarks() -> dict[str, Any] | None:
 
 def render_streamlit_app():
     st.set_page_config(
-        page_title="TrustFusion | Anti-Fraud Cyber-SOC",
+        page_title="TrustFusion | Identity & Threat Intelligence",
         page_icon="🛡️",
         layout="wide",
         initial_sidebar_state="expanded",
     )
 
-    st.title("🛡️ TrustFusion: Enterprise Anti-Fraud Serving Engine")
-    st.caption("Multimodal Defense Middleware &bull; Operation Dream Job Countermeasure &bull; Step 7 Interactive SOC")
+    st.title("🛡️ TrustFusion: Candidate Identity & Threat Intelligence")
+    st.caption("Automated Recruitment Anti-Fraud Platform &bull; Real-Time Candidate Verification")
 
     # Check Backend Connection
     health = check_api_health()
     if health is None:
         st.warning(
-            "⚠️ FastAPI Serving Engine is currently offline at http://127.0.0.1:8000. "
-            "Please start the backend in a separate terminal via: `python backend/main.py`"
+            "⚠️ Verification Engine is currently offline at http://127.0.0.1:8000. "
+            "Please start the engine in your terminal via: `python backend/main.py`"
         )
         st.info("Tip: You can also use the integrated zero-dependency web dashboard directly at http://127.0.0.1:8000/dashboard once started!")
         return
 
-    # Sidebar: SOC Status & Exemplar Selection
-    st.sidebar.header("⚡ SOC Live Telemetry")
-    st.sidebar.success(f"Status: {health.get('status', 'online').upper()}")
-    st.sidebar.metric("Compute Hardware", health.get("gpu_name", "CPU"))
-    st.sidebar.metric("Test Profiles Cached", health.get("test_profiles_cached", 1086))
+    # Sidebar: Live Telemetry & Candidate Selection
+    st.sidebar.header("⚡ System Telemetry")
+    st.sidebar.success(f"Status: {health.get('engine_status', 'ONLINE')}")
+    st.sidebar.metric("Verification Engine", health.get("gpu_name", "GPU Accelerated"))
+    st.sidebar.metric("Candidates in Database", health.get("test_profiles_cached", 1086))
 
     st.sidebar.markdown("---")
-    st.sidebar.subheader("🎯 Forensic Case Studies")
+    st.sidebar.subheader("👤 Candidate Selection")
 
     exemplars = fetch_profiles()
-    ex_options = {f"{ex.get('archetype')} ({ex.get('ground_truth')})": ex.get("profile_id") for ex in exemplars}
-    selected_label = st.sidebar.selectbox("Choose Exemplar Profile:", list(ex_options.keys()) if ex_options else ["None"])
+    ex_options = {f"{ex.get('candidate_name')} - {ex.get('category')}": ex.get("profile_id") for ex in exemplars}
+    selected_label = st.sidebar.selectbox("Choose Candidate to Audit:", list(ex_options.keys()) if ex_options else ["None"])
     selected_id = ex_options.get(selected_label) if ex_options else None
 
-    manual_id = st.sidebar.text_input("Or enter custom Profile ID:", value=selected_id or "")
-    active_profile_id = manual_id.strip() if manual_id.strip() else selected_id
-
-    st.sidebar.markdown("---")
-    simulate_cold_start = st.sidebar.checkbox("❄️ Simulate Cold-Start (Remove Photo)", value=("be4ecb78eebc777b" in (active_profile_id or "")))
+    manual_query = st.sidebar.text_input("Or search candidate by name:", value="")
+    active_profile_id = selected_id
+    if manual_query.strip():
+        # Search via API
+        try:
+            res = requests.get(f"{API_BASE_URL}/api/v1/profiles?limit=1&search={manual_query.strip()}").json()
+            if res.get("profiles"):
+                active_profile_id = res["profiles"][0]["profile_id"]
+        except Exception:
+            pass
 
     if not active_profile_id:
-        st.info("Select a profile from the sidebar to inspect.")
+        st.info("Select a candidate from the sidebar to inspect.")
         return
 
-    # Trigger Inference and Explainability
-    pred = run_predict(active_profile_id, simulate_cold_start=simulate_cold_start)
-    exp = run_explain(active_profile_id, top_k=5)
+    # Trigger Verification & Explainability
+    pred = run_predict(active_profile_id)
+    exp = run_explain(active_profile_id, top_k=4)
 
     if not pred or not exp:
-        st.error("Failed to retrieve profile predictions from FastAPI backend.")
+        st.error("Failed to retrieve candidate verification data.")
         return
 
-    # Tabs Layout
-    tab1, tab2, tab3, tab4, tab5 = st.tabs([
-        "1. Triage Verdict",
-        "2. Attention Gating",
-        "3. SHAP Explainability",
-        "4. Relational Subgraph",
-        "5. Global Benchmarks",
+    # Main Page Navigation Tabs
+    main_tab1, main_tab2 = st.tabs([
+        "🔍 Candidate Verification & Audit",
+        "📊 Dataset Intelligence & Threat Landscape",
     ])
 
-    with tab1:
-        st.subheader("1. Real-Time Moderation Console")
-        col_m1, col_m2, col_m3 = st.columns([1, 1, 1])
+    with main_tab1:
+        # Candidate Header Banner
+        col_c1, col_c2, col_c3 = st.columns([1.2, 1, 1])
 
-        with col_m1:
-            risk_pct = pred["calibrated_risk_score"] * 100
-            st.metric("Unified Threat Risk Score", f"{risk_pct:.2f}%")
+        with col_c1:
+            st.subheader(pred["profile_name"])
+            st.write(f"**Role:** {pred['headline']}")
+            st.write(f"**Organization:** {pred['workplace']}")
+            st.write(f"**Location:** {pred['location']}")
+
+        with col_c2:
+            st.metric("Threat Likelihood Score", f"{pred['threat_risk_score']*100:.1f}%")
             verdict = pred["triage_verdict"]
             if verdict == "HIGH_RISK":
-                st.error("🚨 VERDICT: HIGH RISK / SUSPICIOUS ACCOUNT")
+                st.error("🚨 VERDICT: HIGH RISK / FRAUDULENT")
             elif verdict == "SUSPICIOUS":
                 st.warning("⚠️ VERDICT: ELEVATED THREAT LEVEL")
             else:
                 st.success("✅ VERDICT: AUTHENTIC / LOW RISK")
 
-        with col_m2:
-            st.metric("Threat Archetype", pred["threat_attribution"]["class_label"])
-            st.write("**Class Probability Distribution:**")
-            for cls, p in pred["threat_attribution"]["class_probabilities"].items():
-                st.progress(p, text=f"{cls}: {p*100:.1f}%")
-
-        with col_m3:
-            st.metric("Serving Latency", f"{pred['latency_ms']:.2f} ms")
-            st.write(f"**Name:** {pred['profile_name']}")
-            st.write(f"**Headline:** {pred['headline'] or 'None'}")
-            st.write(f"**Workplace:** {pred['workplace'] or 'None'}")
-            st.write(f"**Location:** {pred['location'] or 'None'}")
-
-    with tab2:
-        st.subheader("2. Multimodal Attention Gating & Cold-Start Policy")
-        gb = pred["gate_breakdown"]
-        st.info(pred["cold_start_policy_applied"])
-
-        col_g1, col_g2, col_g3 = st.columns(3)
-        with col_g1:
-            st.markdown("#### Gate 1: Visual Identity")
-            st.metric("Visual Risk", f"{gb['gate1_visual_risk']*100:.2f}%")
-            st.progress(gb["alpha_vis"], text=f"Attention Weight (α_vis): {gb['alpha_vis']*100:.1f}%")
-            if gb["is_cold_start"]:
-                st.caption("🔒 Modality Masked (M_vis = 0.0)")
-
-        with col_g2:
-            st.markdown("#### Gate 2: Linguistic Forensics")
-            st.metric("Linguistic Risk", f"{gb['gate2_linguistic_risk']*100:.2f}%")
-            st.progress(gb["alpha_ling"], text=f"Attention Weight (α_ling): {gb['alpha_ling']*100:.1f}%")
-
-        with col_g3:
-            st.markdown("#### Gate 3: Relational Graph")
-            st.metric("Relational Risk", f"{gb['gate3_relational_risk']*100:.2f}%")
-            st.progress(gb["alpha_rel"], text=f"Attention Weight (α_rel): {gb['alpha_rel']*100:.1f}%")
-
-    with tab3:
-        st.subheader("3. Multi-Modal SHAP Feature Attribution")
-        st.caption(f"Baseline Expected Margin E[f(x)] = {exp['base_expected_value']:.4f}")
-
-        col_sh1, col_sh2 = st.columns(2)
-        with col_sh1:
-            st.markdown("##### 🔴 Top Risk Drivers (Pushing Toward Fraud)")
-            for d in exp["top_risk_drivers"]:
-                st.write(f"**{d['feature_name']}**: `+{d['shap_value']:.3f}`")
-                st.progress(min(1.0, abs(d["shap_value"])))
-
-        with col_sh2:
-            st.markdown("##### 🟢 Top Protective Factors (Pushing Toward Legitimate)")
-            for p in exp["top_protective_factors"]:
-                st.write(f"**{p['feature_name']}**: `{p['shap_value']:.3f}`")
-                st.progress(min(1.0, abs(p["shap_value"])))
+        with col_c3:
+            st.metric("Assessed Category", pred["category"])
+            st.info(pred["summary_insight"])
 
         st.markdown("---")
-        st.markdown("##### 💬 Linguistic Deception & Off-Platforming Cues")
-        trigs = exp.get("linguistic_triggers", {}).get("triggers_found", [])
-        if trigs:
-            st.error(f"Detected High-Risk Triggers: {', '.join(trigs)}")
-        else:
-            st.success("No off-platforming deception keywords found in profile text.")
+        st.subheader("Multi-Signal Identity Verification")
 
-    with tab4:
-        st.subheader("4. Relational Graph & Multi-Hop Sybil Paths")
-        gnn = exp.get("gnn_subgraph", {})
-        stats = gnn.get("subgraph_stats", {})
+        vs = pred["verification_signals"]
+        col_v1, col_v2, col_v3 = st.columns(3)
 
-        c1, c2, c3, c4 = st.columns(4)
-        c1.metric("Subgraph Nodes", stats.get("num_subgraph_nodes", 0))
-        c2.metric("Subgraph Edges", stats.get("num_subgraph_edges", 0))
-        c3.metric("Connected Neighbors", stats.get("num_connected_users", 0))
-        c4.metric("Sybil Density", f"{stats.get('sybil_density_pct', 0.0):.1f}%")
+        with col_v1:
+            st.markdown("#### 1. Profile Photo Analysis")
+            st.metric("Photo Authenticity", f"{vs['photo_verification_score']*100:.0f}%")
+            st.caption(f"Status: {vs['photo_status']}")
+            st.progress(vs["photo_verification_score"])
 
-        st.markdown("##### Coordinated Multi-Hop Entity Connections:")
-        paths = gnn.get("top_relational_paths", [])
-        if paths:
-            for p in paths:
-                is_sybil = p.get("is_sybil_link")
-                prefix = "🚨 [SYBIL LINK]" if is_sybil else "🌐 [ORGANIC]"
-                st.code(f"{prefix} {p.get('path_narrative')}")
-        else:
-            st.write("No multi-hop co-occurrence paths discovered.")
+        with col_v2:
+            st.markdown("#### 2. Text & Communication")
+            st.metric("Language Integrity", f"{vs['language_integrity_score']*100:.0f}%")
+            st.caption(f"Status: {vs['language_status']}")
+            st.progress(vs["language_integrity_score"])
 
-    with tab5:
-        st.subheader("5. Global Unseen Test Set Benchmarks (1,086 Profiles)")
-        bench = fetch_benchmarks()
-        if bench:
-            mat = bench.get("gate_performance_matrix", {})
-            df_comp = pd.DataFrame([
-                {"Gate": "Gate 1: Visual Identity", "Accuracy": f"{mat.get('gate1_visual', {}).get('accuracy', 0)*100:.2f}%", "Macro F1": f"{mat.get('gate1_visual', {}).get('macro_f1', 0)*100:.2f}%", "ROC-AUC": f"{mat.get('gate1_visual', {}).get('roc_auc', 0):.4f}"},
-                {"Gate": "Gate 2: Linguistic Forensics", "Accuracy": f"{mat.get('gate2_linguistic', {}).get('accuracy', 0)*100:.2f}%", "Macro F1": f"{mat.get('gate2_linguistic', {}).get('macro_f1', 0)*100:.2f}%", "ROC-AUC": f"{mat.get('gate2_linguistic', {}).get('roc_auc', 0):.4f}"},
-                {"Gate": "Gate 3: Relational Graph", "Accuracy": f"{mat.get('gate3_relational', {}).get('accuracy', 0)*100:.2f}%", "Macro F1": f"{mat.get('gate3_relational', {}).get('macro_f1', 0)*100:.2f}%", "ROC-AUC": f"{mat.get('gate3_relational', {}).get('roc_auc', 0):.4f}"},
-                {"Gate": "TRUSTFUSION ENSEMBLE", "Accuracy": f"{mat.get('trustfusion_fusion', {}).get('accuracy', 0)*100:.2f}%", "Macro F1": f"{mat.get('trustfusion_fusion', {}).get('macro_f1', 0)*100:.2f}%", "ROC-AUC": f"{mat.get('trustfusion_fusion', {}).get('roc_auc', 0):.4f}"},
-            ])
-            st.table(df_comp)
+        with col_v3:
+            st.markdown("#### 3. Workplace & Network")
+            st.metric("Network Authenticity", f"{vs['network_authenticity_score']*100:.0f}%")
+            st.caption(f"Status: {vs['network_status']}")
+            st.progress(vs["network_authenticity_score"])
+
+        st.markdown("---")
+        col_e1, col_e2 = st.columns(2)
+
+        with col_e1:
+            st.subheader("Why was this assessment made?")
+            st.markdown("##### 🔴 Identified Risk Signals")
+            risks = exp.get("identified_threat_signals", [])
+            if risks:
+                for r in risks:
+                    st.error(f"**{r['signal_title']}** ({r['impact_level']} Risk): {r['description']}")
+            else:
+                st.write("No major deceptive risk signals detected.")
+
+            st.markdown("##### 🟢 Trust & Authenticity Factors")
+            trusts = exp.get("trust_and_authenticity_signals", [])
+            if trusts:
+                for t in trusts:
+                    st.success(f"**{t['signal_title']}** ({t['impact_level']} Trust): {t['description']}")
+            else:
+                st.write("No strong positive career tenure factors found.")
+
+            keywords = exp.get("detected_deceptive_keywords", [])
+            if keywords:
+                st.warning(f"Detected Keywords: {', '.join(['#' + w for w in keywords])}")
+
+        with col_e2:
+            st.subheader("Colleague & Organization Network")
+            net = exp.get("network_analysis", {})
+            st.metric("Network Health", net.get("workplace_network_health", "Clean"))
+
+            paths = net.get("co_affiliated_paths", [])
+            if paths:
+                st.write("**Observed Network Affiliations:**")
+                for p in paths:
+                    is_sybil = p.get("is_sybil_link")
+                    tag = "🚨 [FLAGGED LINK]" if is_sybil else "🌐 [VERIFIED]"
+                    st.code(f"{tag} {p.get('path_narrative')}")
+            else:
+                st.write("No multi-hop co-affiliations recorded.")
+
+    with main_tab2:
+        st.subheader("📊 LinkedIn Identity & Threat Dataset Analysis")
+        ds = fetch_dataset_analysis()
+        if ds:
+            ov = ds.get("overview", {})
+            m1, m2, m3, m4 = st.columns(4)
+            m1.metric("Total Analyzed Profiles", f"{ov.get('total_profiles_analyzed', 3619):,}")
+            m2.metric("Authentic Industry Profiles", "1,800 (49.7%)")
+            m3.metric("Fraudulent Profiles", "1,819 (50.3%)")
+            m4.metric("Network Entities Mapped", "16,970 Entities")
+
+            st.markdown("---")
+            st.markdown("#### Threat Category Composition")
+            for cat in ds.get("category_distribution", []):
+                st.write(f"**{cat['category']}**: `{cat['count']:,} accounts ({cat['percentage']}%)`")
+                st.caption(cat["threat_nature"])
+                st.progress(cat["percentage"] / 100.0)
+
+            st.markdown("---")
+            st.markdown("#### Key Threat Patterns Discovered in Dataset")
+            for f in ds.get("key_forensic_discoveries", []):
+                st.info(f"**{f['finding']}**: {f['detail']}")
 
 
 if __name__ == "__main__":
@@ -298,11 +292,10 @@ if __name__ == "__main__":
         print("\n" + "=" * 70)
         print("   TrustFusion Security Analyst Dashboard")
         print("=" * 70)
-        print("   Streamlit is not currently installed in this environment.")
-        print("   However, the FULL INTERACTIVE CYBER-SOC DASHBOARD is available")
-        print("   directly through FastAPI without requiring any extra dependencies!")
+        print("   The FULL INTERACTIVE CYBER-SOC DASHBOARD is available")
+        print("   directly through FastAPI without requiring Streamlit!")
         print("")
-        print("   To launch the Serving Engine & Interactive Dashboard:")
+        print("   To launch:")
         print("       python backend/main.py")
         print("   Then open:")
         print("       http://127.0.0.1:8000/dashboard")
