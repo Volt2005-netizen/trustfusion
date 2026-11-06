@@ -5,7 +5,7 @@ A Multi-Modal AI Middleware for Initial-Access Protection & Identity Verificatio
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.2+-ee4c2c.svg)](https://pytorch.org/)
 [![PyG](https://img.shields.io/badge/PyTorch--Geometric-2.4+-34a853.svg)](https://pyg.org/)
 [![CUDA 12.3](https://img.shields.io/badge/CUDA-12.3-green.svg)](https://developer.nvidia.com/cuda-toolkit)
-[![Unit Tests](https://img.shields.io/badge/Unit%20Tests-32%2F32%20Passing-brightgreen.svg)](tests/)
+[![Unit Tests](https://img.shields.io/badge/Unit%20Tests-36%2F36%20Passing-brightgreen.svg)](tests/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ---
@@ -65,12 +65,13 @@ Unlike legacy single-modality filters, TrustFusion uses a **3-Gate Security Pipe
                                [ 4-Class Threat Attribution ]
                        (Legitimate, Manual Fake, ChatGPT Fake, GPT-4 Fake)
                                              ▼
-                               [ SHAP & GNNExplainer Console ]
+                               [ Step 6: Explainability Suite ]
+                             *TreeExplainer SHAP & Relational GNNExplainer*
 ```
 
 ---
 
-## 🛡️ Security Architecture: Gates & Ensemble
+## 🛡️ Security Architecture: Gates, Ensemble & XAI
 
 ### 🖼️ Gate 1: Visual Identity & Cold-Start Verification ([`pipeline/gate1_visual.py`](pipeline/gate1_visual.py))
 * **Technique:** 64-bit Hexadecimal DCT Perceptual Hashing (pHash) + Fourier High-Frequency Energy ($E_{\text{HF}}$) Artifact Analysis + Cold-Start Modality Masking.
@@ -107,6 +108,14 @@ Unlike legacy single-modality filters, TrustFusion uses a **3-Gate Security Pipe
   - Blends CatBoost and XGBoost for unified risk probability calibration ($[0.0000, 1.0000]$) and 4-class threat attribution.
 * **Performance on Unseen Test Profiles:** **98.62% Accuracy**, **98.62% Macro F1**, **0.9984 ROC-AUC**, **99.63% Detection Recall**, **95.03% 4-Class Attribution Accuracy**.
 
+### 🔍 Step 6: Explainability Suite (XAI) ([`xai/`](xai/))
+* **Technique:** Multi-Modal TreeExplainer SHAP ([`xai/shap_explainer.py`](xai/shap_explainer.py)) + Relational Subgraph Isolation GNNExplainer ([`xai/gnn_explainer.py`](xai/gnn_explainer.py)).
+* **Function:**
+  - **SHAP Feature Attribution:** Computes exact blended TreeExplainer values across all 28 decision features, identifying top risk drivers (Linguistic Risk 53.94%, Relational Risk 34.89%, Visual Risk 2.42%) and protective factors for any profile.
+  - **Token-Level Keyword Scanning:** Extracts text-level forensic triggers (WhatsApp, Telegram, wire transfer, urgent hiring) to provide readable explanations.
+  - **GNN Computational Subgraph Extraction:** Traces 2-hop ego-networks across 16,970 nodes, isolating multi-hop scam paths (`User -> Company -> Co-Conspirators`) and quantifying Sybil co-occurrence density.
+* **Execution Latency:** Instant evaluation in **< 1s** with comprehensive JSON/CSV audit trails.
+
 ---
 
 ## 📊 Experimental Results & Benchmark Statistics
@@ -125,7 +134,8 @@ Evaluated on a benchmark of **3,619 profiles** (2,533 Train / 1,086 Strictly Uns
 | **Gate 1: Visual Identity Alone** | [`gate1_visual.py`](pipeline/gate1_visual.py) | Image / Vision | **81.78%** | **80.76%** | **0.8283** | 64-bit DCT pHash, StyleGAN/FFHQ, 1,427 Sybil Photo Collisions |
 | **Gate 2: Linguistic Forensics Alone** | [`gate2_linguistic.py`](pipeline/gate2_linguistic.py) | Natural Language | **98.34%** | **98.34%** | **0.9980** | RoBERTa STE, PCA-150 (96.99% var), Deception Scan, IAT Entropy |
 | **Gate 3: Relational Graph Alone** | [`gate3_relational.py`](pipeline/gate3_relational.py) | Graph Network | **94.66%** | **94.66%** | **0.9914** | 16,970 Nodes, 45,536 Edges, 1,181 Louvain Clusters (0.5166 Mod) |
-| **TRUSTFUSION MULTIMODAL ENSEMBLE** | [`fusion_classifier.py`](pipeline/fusion_classifier.py) | **All Modalities** | **98.62%** | **98.62%** | **0.9984** | **92-D Fused Vector, Dynamic Attention, 99.63% Recall, 95.03% 4-Class** |
+| **Step 5: Multimodal Ensemble** | [`fusion_classifier.py`](pipeline/fusion_classifier.py) | **All Modalities** | **98.62%** | **98.62%** | **0.9984** | **92-D Fused Vector, Dynamic Attention, 99.63% Recall, 95.03% 4-Class** |
+| **Step 6: Explainability Suite** | [`xai/`](xai/) | **XAI / Attribution** | *N/A* | *N/A* | *N/A* | **Blended SHAP TreeExplainer, Token Cues, 2-Hop GNN Subgraphs** |
 
 ---
 
@@ -141,7 +151,7 @@ trustfusion/
 │       ├── visual/                       # Gate 1 visual embeddings, masks & pHash index
 │       ├── linguistic/                   # Gate 2 RoBERTa PCA-150 representations & risk scores
 │       ├── relational/                   # Gate 3 RGCN models, embeddings & Louvain features
-│       └── fusion/                       # Step 5 Fused 92-D vectors, attention weights & ensemble models
+│       └── fusion/                       # Step 5 Fused 92-D vectors, attention weights, models & SHAP
 │
 ├── pipeline/
 │   ├── preprocess.py                     # Step 1: Ingestion, schema validation & anti-leakage scaling
@@ -156,14 +166,15 @@ trustfusion/
 │   └── gnn_explainer.py                  # Step 6: GNN subgraph path isolation
 │
 ├── backend/
-│   └── main.py                           # FastAPI inference server & moderation API
+│   └── main.py                           # Step 7: FastAPI inference server & moderation API
 │
 └── tests/
     ├── test_preprocessing.py             # Schema & anti-leakage invariants (13 tests)
     ├── test_gate1.py                     # pHash, cold-start & visual dimensions (6 tests)
     ├── test_gate2.py                     # STE, PCA-150 & entropy calculations (4 tests)
     ├── test_gate3.py                     # Graph builder, RGCN & inductive masking (5 tests)
-    └── test_fusion.py                    # Attention gating, cold-start masking & 92-D tensor (4 tests)
+    ├── test_fusion.py                    # Attention gating, cold-start masking & 92-D tensor (4 tests)
+    └── test_xai.py                       # SHAP TreeExplainer & GNN subgraph extraction (4 tests)
 ```
 
 ---
@@ -171,7 +182,7 @@ trustfusion/
 ## 🚀 Quickstart & Examiner Demonstration
 
 ### 1. Instant Demonstration Mode (`--demo`)
-Demonstrate any pipeline stage live in front of examiners in **< 1 to 8 seconds** using precomputed artifacts:
+Demonstrate any pipeline or explainability stage live in front of examiners in **< 1 to 8 seconds** using precomputed artifacts:
 
 ```powershell
 # Step 1: Preprocessing & Anti-Leakage Report (< 2s)
@@ -188,10 +199,16 @@ python pipeline/gate1_visual.py --demo
 
 # Step 5: Cross-Modal Attention Gating & Decision Ensemble Report (< 1s)
 python pipeline/fusion_classifier.py --demo
+
+# Step 6A: Multi-Modal SHAP Feature Attribution Report (< 1s)
+python xai/shap_explainer.py --demo
+
+# Step 6B: Relational GNN Subgraph Path Isolation Report (< 1s)
+python xai/gnn_explainer.py --demo
 ```
 
-### 2. Run Automated Unit Tests (32/32 Passing)
-Verify the entire mathematical and scientific integrity of all five pipeline stages in **0.35s**:
+### 2. Run Automated Unit Tests (36/36 Passing)
+Verify the entire mathematical and scientific integrity of all six pipeline stages in **~2.7s**:
 
 ```powershell
 python -m unittest discover tests -v
