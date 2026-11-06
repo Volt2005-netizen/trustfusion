@@ -26,6 +26,21 @@ WORKSPACE_ROOT = Path(__file__).resolve().parent.parent
 if str(WORKSPACE_ROOT) not in sys.path:
     sys.path.insert(0, str(WORKSPACE_ROOT))
 
+# Self-healing virtualenv launcher: If executed via system Python without dependencies,
+# automatically relaunch using the project's dedicated virtual environment.
+_venv_python = WORKSPACE_ROOT / "venv" / "Scripts" / "python.exe"
+if not _venv_python.exists():
+    _venv_python = WORKSPACE_ROOT / "venv" / "bin" / "python"
+
+if _venv_python.exists() and Path(sys.executable).resolve() != _venv_python.resolve():
+    try:
+        import torch
+    except ModuleNotFoundError:
+        import subprocess
+        print(f"[*] Detected unactivated Python ({sys.executable}).")
+        print(f"[*] Seamlessly relaunching using project virtual environment: {_venv_python}\n")
+        sys.exit(subprocess.call([str(_venv_python)] + sys.argv))
+
 import numpy as np
 import pandas as pd
 import torch
