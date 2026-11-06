@@ -5,7 +5,7 @@ A Multi-Modal AI Middleware for Initial-Access Protection & Identity Verificatio
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.2+-ee4c2c.svg)](https://pytorch.org/)
 [![PyG](https://img.shields.io/badge/PyTorch--Geometric-2.4+-34a853.svg)](https://pyg.org/)
 [![CUDA 12.3](https://img.shields.io/badge/CUDA-12.3-green.svg)](https://developer.nvidia.com/cuda-toolkit)
-[![Unit Tests](https://img.shields.io/badge/Unit%20Tests-36%2F36%20Passing-brightgreen.svg)](tests/)
+[![Unit Tests](https://img.shields.io/badge/Unit%20Tests-46%2F46%20Passing-brightgreen.svg)](tests/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ---
@@ -67,6 +67,9 @@ Unlike legacy single-modality filters, TrustFusion uses a **3-Gate Security Pipe
                                              ▼
                                [ Step 6: Explainability Suite ]
                              *TreeExplainer SHAP & Relational GNNExplainer*
+                                              ▼
+                                [ Step 7: Serving API & Cyber-SOC Dashboard ]
+                              *(FastAPI REST Endpoints & Interactive UI Console)*
 ```
 
 ---
@@ -115,6 +118,19 @@ Unlike legacy single-modality filters, TrustFusion uses a **3-Gate Security Pipe
   - **Token-Level Keyword Scanning:** Extracts text-level forensic triggers (WhatsApp, Telegram, wire transfer, urgent hiring) to provide readable explanations.
   - **GNN Computational Subgraph Extraction:** Traces 2-hop ego-networks across 16,970 nodes, isolating multi-hop scam paths (`User -> Company -> Co-Conspirators`) and quantifying Sybil co-occurrence density.
 * **Execution Latency:** Instant evaluation in **< 1s** with comprehensive JSON/CSV audit trails.
+
+### 🚀 Step 7: Serving API & Security Operations Dashboard ([ackend/main.py](backend/main.py), [dashboard.py](dashboard.py))
+* **Technique:** High-Performance Async FastAPI Server + Multi-Threaded Model Lifespan + Zero-Dependency Responsive Cyber-SOC Web UI & Companion Streamlit Interface.
+* **Function:**
+  - **Endpoints Served:**
+    - GET /health: GPU/CUDA diagnostics, memory telemetry, and readiness status across all 7 ML models.
+    - POST /api/v1/predict: End-to-end multimodal inference (< 3ms latency), returning calibrated fraud probability ($[0.0000, 1.0000]$), triage verdict (SAFE, SUSPICIOUS, HIGH_RISK), and 4-class threat attribution.
+    - **Dynamic Cold-Start Switch:** Accepts simulate_cold_start=True to simulate photo removal live, dynamically zeroing $\\alpha_{\\text{vis}} = 0.0$ and re-normalizing weights across text and graph.
+    - POST /api/v1/explain: On-demand local SHAP risk drivers/protective factors, linguistic deception trigger keyword chips, and PyG 2-hop computational subgraph with Sybil density metrics.
+    - GET /api/v1/profiles: Fast catalog of exemplar benchmark profiles (Authentic Exec, ChatGPT Bot, Phishing Impersonator, Cold-Start Profile) and test set lookup.
+    - GET /api/v1/benchmarks: Global gate ablation matrix, test set confusion matrix, and top-10 global SHAP feature ranking.
+  - **Interactive Cyber-SOC Single-Page Dashboard (/dashboard):** Built-in dark glassmorphism cybersecurity dashboard with live gauges, preset selector, real-time SHAP waterfall bars, and 2-hop Sybil network visualizer directly accessible via browser.
+* **Serving Latency:** **< 3ms per profile** on RTX 4050 / Modern CPU.
 
 ---
 
@@ -166,7 +182,9 @@ trustfusion/
 │   └── gnn_explainer.py                  # Step 6: GNN subgraph path isolation
 │
 ├── backend/
-│   └── main.py                           # Step 7: FastAPI inference server & moderation API
+│   └── main.py                           # Step 7: FastAPI inference server, REST API & Cyber-SOC Dashboard
+│
+├── dashboard.py                          # Step 7: Companion Streamlit Security Operations Center interface
 │
 └── tests/
     ├── test_preprocessing.py             # Schema & anti-leakage invariants (13 tests)
@@ -174,7 +192,8 @@ trustfusion/
     ├── test_gate2.py                     # STE, PCA-150 & entropy calculations (4 tests)
     ├── test_gate3.py                     # Graph builder, RGCN & inductive masking (5 tests)
     ├── test_fusion.py                    # Attention gating, cold-start masking & 92-D tensor (4 tests)
-    └── test_xai.py                       # SHAP TreeExplainer & GNN subgraph extraction (4 tests)
+    ├── test_xai.py                       # SHAP TreeExplainer & GNN subgraph extraction (4 tests)
+    └── test_backend.py                   # Step 7: Serving API, cold-start & dashboard tests (10 tests)
 ```
 
 ---
@@ -207,8 +226,23 @@ python xai/shap_explainer.py --demo
 python xai/gnn_explainer.py --demo
 ```
 
-### 2. Run Automated Unit Tests (36/36 Passing)
-Verify the entire mathematical and scientific integrity of all six pipeline stages in **~2.7s**:
+### 2. Step 7: Launch Serving Engine & Cyber-SOC Dashboard (< 2s)
+Start the production-grade FastAPI inference engine and interactive Security Operations Center dashboard:
+
+`powershell
+python backend/main.py
+`
+* **Interactive Cyber-SOC Dashboard:** http://127.0.0.1:8000/dashboard
+* **Interactive OpenAPI Swagger Docs:** http://127.0.0.1:8000/docs
+* **Health & Diagnostics Endpoint:** http://127.0.0.1:8000/health
+
+*(Optional) Launch Companion Streamlit Dashboard:*
+`powershell
+streamlit run dashboard.py
+`
+
+### 3. Run Automated Unit Tests (46/46 Passing)
+Verify the entire mathematical and scientific integrity of all seven pipeline stages in **~3.7s**:
 
 ```powershell
 python -m unittest discover tests -v
