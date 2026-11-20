@@ -2130,6 +2130,7 @@ def get_dashboard_html():
     <script>
         let currentProfileId = "TF_ac29c8fbb6535468";
         let exemplarProfiles = [];
+        let activeCandidateFilter = 'all';
 
         window.addEventListener('DOMContentLoaded', async () => {
             await loadExemplars();
@@ -2177,9 +2178,6 @@ def get_dashboard_html():
                 icon.innerText = '[+] Expand Details';
             }
         }
-
-        let exemplarProfiles = [];
-        let activeCandidateFilter = 'all';
 
         function setCandidateFilter(filterType) {
             activeCandidateFilter = filterType;
