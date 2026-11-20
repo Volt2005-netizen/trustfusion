@@ -1038,96 +1038,164 @@ def explain_profile(req: ExplainRequest) -> ExplainResponse:
 
         fname_lower = fname.lower()
 
-        count_feature_map = {
-            "recommendation": "peer recommendations",
-            "license": "professional licenses",
-            "project": "verified projects",
-            "publication": "industry publications",
-            "honor": "honors and awards",
-            "endorsement": "skills endorsements",
-            "certification": "certifications",
-            "volunteering": "volunteer experience",
-            "course": "professional courses",
-            "language": "multilingual proficiency",
-            "skill": "technical and professional skills",
-            "education": "academic credentials",
-            "activit": "co-curricular activities",
-            "interest": "professional interests",
-            "organization": "professional memberships",
-            "score": "test and achievement scores",
-        }
-
-        matched_count_feat = None
-        for k, clean_term in count_feature_map.items():
-            if k in fname_lower:
-                matched_count_feat = clean_term
-                break
-
-        if matched_count_feat:
-            title_word = matched_count_feat.title()
-            label = f"Verified {title_word}"
-            if num_val == 0 and signed_shap > 0:
-                desc = f"Absence of verified {matched_count_feat} slightly elevates baseline risk relative to established profiles."
-            elif num_val > 0 and signed_shap < 0:
-                desc = f"Presence of verified {matched_count_feat} reinforces profile authenticity."
-            elif num_val > 0 and signed_shap > 0:
-                desc = f"Unusual pattern or anomalous distribution in {matched_count_feat} elevates risk relative to peers."
+        # 1. Gate 1: Visual Modality Risk
+        if "visual" in fname_lower and "risk" in fname_lower:
+            label = "Profile Image Analysis"
+            if is_risk:
+                desc = f"Headshot exhibits synthetic generation artifacts or duplicate facial collision (Risk Score: {num_val:.3f})."
+            elif num_val < 0.01:
+                desc = "Zero adversarial anomalies detected in profile image reinforces profile authenticity."
             else:
-                desc = f"Profile baseline for {matched_count_feat} shows no negative anomaly."
-        elif "linguistic" in fname_lower:
+                desc = f"Headshot matches authentic photographic camera profile (Authenticity Score: {1.0 - num_val:.1%})."
+
+        # 2. Gate 2: Linguistic Modality Risk
+        elif "linguistic" in fname_lower and "risk" in fname_lower:
             label = "Communication & Tone Integrity"
             if is_risk:
                 desc = f"Automated conversational syntax, urgency cues, or synthetic script patterns detected (Risk Score: {num_val:.3f})."
+            elif num_val < 0.01:
+                desc = "Zero adversarial anomalies detected in communication and tone reinforces profile authenticity."
             else:
                 desc = f"Natural, contextually consistent career narrative across profile sections (Risk Score: {num_val:.3f})."
-        elif "relational" in fname_lower:
+
+        # 3. Gate 3: Relational Modality Risk
+        elif "relational" in fname_lower and "risk" in fname_lower:
             label = "Workplace & Employer Network"
             if is_risk:
                 desc = f"Account affiliated with newly formed or unverified corporate entity (Risk Score: {num_val:.3f})."
+            elif num_val < 0.01:
+                desc = "Zero adversarial anomalies detected in workplace network reinforces profile authenticity."
             else:
                 desc = f"Verified alumni and co-workers across recognized enterprise firms (Risk Score: {num_val:.3f})."
-        elif "visual" in fname_lower:
-            label = "Profile Image Forensics"
-            if "mask" in fname_lower:
-                label = "Avatar Presence"
-                if num_val == 0.0:
-                    desc = "Absence of profile photo elevates verification reliance on text and graph signals."
-                else:
-                    desc = "Profile photo provided and verified against photographic baselines."
-            elif is_risk:
-                desc = f"Headshot exhibits synthetic generation artifacts or duplicate facial collision (Risk: {num_val:.3f})."
+
+        # 4. Modality Mask & Attention Weights
+        elif "visual modality mask" in fname_lower:
+            label = "Avatar Presence"
+            if num_val == 0.0:
+                desc = "Absence of profile photo elevates verification reliance on text and graph signals."
             else:
-                desc = f"Headshot matches authentic photographic camera profile (Authenticity: {1.0 - num_val:.1%})."
-        elif "connection" in fname_lower or "follower" in fname_lower:
+                desc = "Profile photo provided and verified against authentic photographic baselines."
+        elif "visual attention weight" in fname_lower:
+            label = "Visual Gate Attention Weight"
+            desc = f"Dynamic softmax allocation for visual forensics: {num_val*100:.1f}%."
+        elif "linguistic attention weight" in fname_lower:
+            label = "Linguistic Gate Attention Weight"
+            desc = f"Dynamic softmax allocation for text forensics: {num_val*100:.1f}%."
+        elif "relational attention weight" in fname_lower:
+            label = "Relational Gate Attention Weight"
+            desc = f"Dynamic softmax allocation for graph forensics: {num_val*100:.1f}%."
+
+        # 5. Network Relationship & Follower Ratios (Resolving normalized float truncation)
+        elif "connection" in fname_lower:
             label = "Network Relationship Ratio"
-            if is_risk and num_val < 50:
-                desc = f"Unusually sparse network ({int(num_val)} connections) elevates risk relative to stated seniority."
-            elif is_risk:
-                desc = f"Disproportionate follower-to-connection ratio typical of bot outreach ({int(num_val)} connections)."
+            raw_conn = row.get("Connections")
+            if raw_conn is not None and not pd.isna(raw_conn) and str(raw_conn).lower() not in ("nan", "none", ""):
+                actual_conn = int(float(raw_conn))
             else:
-                desc = f"Balanced, established professional network ({int(num_val):,} connections) reinforces authenticity."
+                actual_conn = int(round(num_val * 500))
+            if is_risk and actual_conn < 50:
+                desc = f"Unusually sparse network ({actual_conn} connections) elevates risk relative to stated seniority."
+            elif is_risk:
+                desc = f"Disproportionate connection pattern typical of bot outreach ({actual_conn} connections)."
+            else:
+                desc = f"Established professional network ({actual_conn}+ connections) reinforces authenticity."
+
+        elif "follower" in fname_lower:
+            label = "Audience Following Ratio"
+            raw_foll = row.get("Followers")
+            if raw_foll is not None and not pd.isna(raw_foll) and str(raw_foll).lower() not in ("nan", "none", ""):
+                actual_foll = int(float(raw_foll))
+            else:
+                actual_foll = int(round(num_val * 1000))
+            if is_risk:
+                desc = f"Skewed follower count ({actual_foll:,} followers) relative to profile activity."
+            else:
+                desc = f"Natural audience following ({actual_foll:,} followers) reinforces professional visibility."
+
+        # 6. Career Tenure & History (Resolving normalized float truncation)
         elif "experience" in fname_lower:
             label = "Career Tenure & History"
-            if is_risk and num_val <= 1:
-                desc = f"Abrupt or single recorded position ({int(num_val)} experience) indicates nascent or unverifiable employment history."
-            elif is_risk:
-                desc = "Discontinuous employment tenure or unverified job title transitions."
+            raw_exp = row.get("Number of Experiences")
+            if raw_exp is not None and not pd.isna(raw_exp) and str(raw_exp).lower() not in ("nan", "none", ""):
+                actual_exp = int(float(raw_exp))
             else:
-                desc = f"Demonstrated career tenure across {int(num_val)} established enterprise roles."
-        elif "louvain" in fname_lower or "community" in fname_lower:
-            label = "Community Network Topology"
+                actual_exp = max(1, int(round(num_val * 17)))
             if is_risk:
-                desc = "Cluster structure aligns with dense, insular community graph typical of coordinated Sybil rings."
+                if actual_exp <= 1:
+                    desc = f"Abrupt or single recorded position ({actual_exp} experience entry) indicates nascent employment history."
+                else:
+                    desc = f"Discontinuous employment tenure or unverified job title transitions across {actual_exp} roles."
             else:
-                desc = "Community membership consistent with organic alumni and verified corporate peers."
+                if actual_exp == 0:
+                    desc = "Career tenure record aligns with legitimate baseline profile."
+                else:
+                    desc = f"Demonstrated career tenure across {actual_exp} established enterprise roles."
+
+        # 7. Louvain Community Graph Features
+        elif "louvain community bucket" in fname_lower:
+            label = "Community Network Bucket"
+            desc = "Cluster structure aligns with dense, insular community graph typical of coordinated Sybil rings." if is_risk else "Community membership consistent with organic alumni and verified corporate peers."
+        elif "louvain cluster size" in fname_lower:
+            label = "Network Cluster Size"
+            desc = "Abnormally high cluster density typical of automated bot generation." if is_risk else "Cluster size aligns with organic organizational distributions."
+        elif "louvain co-occurrence" in fname_lower:
+            label = "Co-occurrence Network Degree"
+            desc = "Excessive co-occurrence linkages indicate synthetic referral networks." if is_risk else "Natural co-occurrence connectivity across authentic institutional peers."
+        elif "louvain weighted connectivity" in fname_lower:
+            label = "Community Weighted Connectivity"
+            desc = "Elevated weighted connectivity indicative of concentrated Sybil coordination." if is_risk else "Weighted edge distribution reflects organic peer interaction patterns."
+
+        # 8. Specific Count Features (Exact 1-to-1 mapping)
         else:
-            label = fname.replace("Number of", "Verified").replace("Louvain", "Community")
-            if num_val == 0 and signed_shap > 0:
-                desc = f"Absence of verified {label.lower()} slightly elevates baseline risk relative to established profiles."
-            elif num_val > 0 and signed_shap < 0:
-                desc = f"Presence of verified {label.lower()} reinforces profile authenticity."
+            count_feature_meta = {
+                "number of educations": ("Verified Academic Credentials", "academic credentials", "Number of Educations"),
+                "number of licenses": ("Verified Professional Licenses", "professional licenses", "Number of Licenses"),
+                "number of recommendations": ("Verified Peer Recommendations", "peer recommendations", "Number of Recommendations"),
+                "number of projects": ("Verified Industry Projects", "industry projects", "Number of Projects"),
+                "number of publications": ("Verified Publications", "publications", "Number of Publications"),
+                "number of honors": ("Verified Honors & Awards", "honors and awards", "Number of Honors"),
+                "number of volunteering": ("Verified Volunteering Experience", "volunteering experience", "Number of Volunteering"),
+                "number of courses": ("Verified Professional Courses", "professional courses", "Number of Courses"),
+                "number of skills": ("Verified Technical Skills", "technical skills", "Number of Skills"),
+                "number of scores": ("Verified Test & Achievement Scores", "test and achievement scores", "Number of Scores"),
+                "number of languages": ("Verified Multilingual Proficiency", "multilingual proficiencies", "Number of Languages"),
+                "number of organizations": ("Verified Professional Memberships", "professional memberships", "Number of Organizations"),
+                "number of interests": ("Verified Professional Interests", "professional interests", "Number of Interests"),
+                "number of activities": ("Verified Co-Curricular Activities", "co-curricular activities", "Number of Activities"),
+            }
+
+            matched = None
+            for k, (t_label, clean_term, col_name) in count_feature_meta.items():
+                if k in fname_lower:
+                    matched = (t_label, clean_term, col_name)
+                    break
+
+            if matched:
+                label, clean_term, col_name = matched
+                raw_c = row.get(col_name)
+                if raw_c is not None and not pd.isna(raw_c) and str(raw_c).lower() not in ("nan", "none", ""):
+                    raw_count = int(float(raw_c))
+                else:
+                    raw_count = int(round(num_val))
+
+                if raw_count == 0 and signed_shap > 0:
+                    desc = f"Absence of verified {clean_term} slightly elevates baseline risk relative to established profiles."
+                elif raw_count > 0 and signed_shap < 0:
+                    desc = f"Presence of verified {clean_term} ({raw_count} recorded) reinforces profile authenticity."
+                elif raw_count > 0 and signed_shap > 0:
+                    desc = f"Unusual pattern or anomalous distribution in {clean_term} ({raw_count} recorded) elevates risk relative to peers."
+                elif raw_count == 0 and signed_shap < 0:
+                    desc = f"Zero anomalies detected in {clean_term} reinforces profile authenticity."
+                else:
+                    desc = f"Profile baseline for {clean_term} shows no negative anomaly."
             else:
-                desc = f"Observed activity pattern indicates {'threat' if is_risk else 'legitimate'} behavior."
+                label = fname.replace("Number of", "Verified").replace("Louvain", "Community")
+                if num_val == 0 and signed_shap > 0:
+                    desc = f"Absence of verified {label.lower()} slightly elevates baseline risk relative to established profiles."
+                elif num_val > 0 and signed_shap < 0:
+                    desc = f"Presence of verified {label.lower()} reinforces profile authenticity."
+                else:
+                    desc = f"Observed activity pattern indicates {'threat' if is_risk else 'legitimate'} behavior."
 
         return {
             "signal_title": label,
