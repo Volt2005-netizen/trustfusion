@@ -233,11 +233,19 @@ def render_streamlit_app():
 
         with col_v1:
             st.markdown("#### 1. Profile Photo Analysis")
-            st.metric("Photo Authenticity", f"{vs['photo_verification_score']*100:.1f}%", help=f"Modality Risk: {gb.get('gate1_visual_risk', 0.0):.4f}")
-            alpha_v = gb.get("alpha_vis", 0.33)
-            st.caption(f"Dynamic Allocation: **α_vis = {alpha_v:.4f} ({alpha_v*100:.1f}%)**")
-            st.caption("Modality Precision: **74.88%**")
-            st.progress(max(0.0, min(1.0, float(vs["photo_verification_score"]))))
+            is_cold = gb.get("is_cold_start", False) or not vs.get("has_photo", True)
+            if is_cold:
+                st.metric("Photo Authenticity", "MASKED", help="Modality Risk: N/A (Cold-Start)")
+                st.caption("No photo provided — visual modality masked to neutral baseline prior.")
+                st.caption("Dynamic Allocation: **α_vis = 0.0000 (Suppressed)**")
+                st.caption("Modality Precision: **74.88%**")
+                st.progress(0.0)
+            else:
+                st.metric("Photo Authenticity", f"{vs['photo_verification_score']*100:.1f}%", help=f"Modality Risk: {gb.get('gate1_visual_risk', 0.0):.4f}")
+                alpha_v = gb.get("alpha_vis", 0.33)
+                st.caption(f"Dynamic Allocation: **α_vis = {alpha_v:.4f} ({alpha_v*100:.1f}%)**")
+                st.caption("Modality Precision: **74.88%**")
+                st.progress(max(0.0, min(1.0, float(vs["photo_verification_score"]))))
 
         with col_v2:
             st.markdown("#### 2. Text & Communication")
@@ -288,7 +296,12 @@ def render_streamlit_app():
         with col_e2:
             st.subheader("Colleague & Organization Network")
             net = exp.get("network_analysis", {})
-            st.metric("Network Health", net.get("workplace_network_health", "Clean"))
+            sub = net.get("subgraph_telemetry", {})
+            grouped = net.get("grouped_entities", [])
+            has_shell = any(e.get("verification_tag") == "SHELL" or e.get("is_sybil") for e in grouped)
+            is_high_risk = bool(sub.get("flagged_sybils", 0) > 0) or has_shell or bool(net.get("is_flagged_network"))
+            health_text = "High-Risk Sybil Cluster Detected" if is_high_risk else (net.get("workplace_network_health") or "Clean & Verified")
+            st.metric("Network Health", health_text)
 
             sub = net.get("subgraph_telemetry", {})
             sm1, sm2, sm3 = st.columns(3)
