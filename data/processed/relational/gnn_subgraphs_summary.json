@@ -1,0 +1,2513 @@
+{
+  "project": "TrustFusion Step 6: Relational GNNExplainer Module",
+  "total_graph_nodes": 16970,
+  "total_directed_edges": 45536,
+  "total_user_nodes": 3619,
+  "num_relations": 6,
+  "exemplar_explanations": [
+    {
+      "target_user": {
+        "node_idx": 2536,
+        "node_type": "User",
+        "label": "Brett Bailey",
+        "profile_id": "TF_ac29c8fbb6535468",
+        "workplace": "Regional Vice President at Hawthorne Residential Partners",
+        "is_fake": 0,
+        "class_name": "legitimate",
+        "relational_risk": 0.017188724130392075
+      },
+      "subgraph_stats": {
+        "num_subgraph_nodes": 40,
+        "num_subgraph_edges": 84,
+        "num_connected_users": 30,
+        "num_fake_neighbors": 0,
+        "sybil_density_pct": 0.0,
+        "is_isolated_sybil_cluster": false
+      },
+      "top_relational_paths": [
+        {
+          "entity_type": "Institute",
+          "entity_name": "university of north carolina at chapel hill",
+          "connected_user_id": "TF_0f5e03a68a5e4741",
+          "connected_user_name": "Hannah Skingle",
+          "connected_user_class": "legitimate",
+          "connected_user_is_fake": 0,
+          "connected_user_risk": 2.464382475864113e-07,
+          "is_sybil_link": false,
+          "path_narrative": "Brett Bailey --[studied_at]--> Institute('university of north carolina at chapel hill') <--[studied_at]-- Hannah Skingle (legitimate)",
+          "importance_weight": 0.5
+        },
+        {
+          "entity_type": "Institute",
+          "entity_name": "university of north carolina at chapel hill",
+          "connected_user_id": "TF_24187e5ee9566133",
+          "connected_user_name": "Jackson Denton",
+          "connected_user_class": "legitimate",
+          "connected_user_is_fake": 0,
+          "connected_user_risk": 2.627422759360343e-07,
+          "is_sybil_link": false,
+          "path_narrative": "Brett Bailey --[studied_at]--> Institute('university of north carolina at chapel hill') <--[studied_at]-- Jackson Denton (legitimate)",
+          "importance_weight": 0.5
+        },
+        {
+          "entity_type": "Institute",
+          "entity_name": "university of north carolina at chapel hill",
+          "connected_user_id": "TF_d04bdb2b64a6c7ac",
+          "connected_user_name": "Brett Berkenblit",
+          "connected_user_class": "legitimate",
+          "connected_user_is_fake": 0,
+          "connected_user_risk": 5.609231720882235e-06,
+          "is_sybil_link": false,
+          "path_narrative": "Brett Bailey --[studied_at]--> Institute('university of north carolina at chapel hill') <--[studied_at]-- Brett Berkenblit (legitimate)",
+          "importance_weight": 0.5
+        },
+        {
+          "entity_type": "Institute",
+          "entity_name": "university of north carolina at chapel hill",
+          "connected_user_id": "TF_d38871e479223b55",
+          "connected_user_name": "Brooks Townsend",
+          "connected_user_class": "legitimate",
+          "connected_user_is_fake": 0,
+          "connected_user_risk": 2.646779933002108e-07,
+          "is_sybil_link": false,
+          "path_narrative": "Brett Bailey --[studied_at]--> Institute('university of north carolina at chapel hill') <--[studied_at]-- Brooks Townsend (legitimate)",
+          "importance_weight": 0.5
+        }
+      ],
+      "nodes": [
+        {
+          "node_idx": 67,
+          "node_type": "User",
+          "label": "Hannah Skingle",
+          "profile_id": "TF_0f5e03a68a5e4741",
+          "workplace": "Marketing Associate at Frontline Ventures",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 2.464382475864113e-07,
+          "is_target": false
+        },
+        {
+          "node_idx": 116,
+          "node_type": "User",
+          "label": "Jackson Denton",
+          "profile_id": "TF_24187e5ee9566133",
+          "workplace": "Solar Project Development",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 2.627422759360343e-07,
+          "is_target": false
+        },
+        {
+          "node_idx": 135,
+          "node_type": "User",
+          "label": "S. Wesley Tripp III",
+          "profile_id": "TF_42aa833522df1d0e",
+          "workplace": "Attorney at Young Moore and Henderson, P.A.",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 0.00011048688611481339,
+          "is_target": false
+        },
+        {
+          "node_idx": 348,
+          "node_type": "User",
+          "label": "Brett Berkenblit",
+          "profile_id": "TF_d04bdb2b64a6c7ac",
+          "workplace": "Business Manager at Capital One",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 5.609231720882235e-06,
+          "is_target": false
+        },
+        {
+          "node_idx": 433,
+          "node_type": "User",
+          "label": "Tyler Norris",
+          "profile_id": "TF_f39c13676a64e28a",
+          "workplace": "VP of Development, Cypress Creek Renewables",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 7.42839984013699e-05,
+          "is_target": false
+        },
+        {
+          "node_idx": 508,
+          "node_type": "User",
+          "label": "Brooks Townsend",
+          "profile_id": "TF_d38871e479223b55",
+          "workplace": "Lead Software Engineer at Cosmonic",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 2.646779933002108e-07,
+          "is_target": false
+        },
+        {
+          "node_idx": 669,
+          "node_type": "User",
+          "label": "Michelle Jones Edelen, MBA",
+          "profile_id": "TF_a48f31d78d658f78",
+          "workplace": "Your Excellence Life Coach | Speaker Influencing Transformation | As seen in ABC, NBC, CBS, FOX, Ebony",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 1.0892633326875512e-05,
+          "is_target": false
+        },
+        {
+          "node_idx": 708,
+          "node_type": "User",
+          "label": "Trey Oglesby",
+          "profile_id": "TF_a6af2273e92a9c94",
+          "workplace": "Partner - KPMG Healthcare",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 2.8843327726235657e-08,
+          "is_target": false
+        },
+        {
+          "node_idx": 835,
+          "node_type": "User",
+          "label": "Arlene Brown",
+          "profile_id": "TF_6a82683b3c38b118",
+          "workplace": "Thinker. Planner. Mover. Shaker.",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 3.2653554171702126e-07,
+          "is_target": false
+        },
+        {
+          "node_idx": 1209,
+          "node_type": "User",
+          "label": "Jeremy M. Tarr",
+          "profile_id": "TF_ce28039de56eb773",
+          "workplace": "U.S. State Policy Director, Clean Air Task Force",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 2.4911270884331316e-05,
+          "is_target": false
+        },
+        {
+          "node_idx": 1360,
+          "node_type": "User",
+          "label": "Chasity Love, PhD",
+          "profile_id": "TF_7742a03b1bc5d9ae",
+          "workplace": "Quality Manager I Analytical Chemist | ED&I Champion",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 2.1898561044508824e-06,
+          "is_target": false
+        },
+        {
+          "node_idx": 1589,
+          "node_type": "User",
+          "label": "Sig Hutchinson",
+          "profile_id": "TF_c3f57791a1a31392",
+          "workplace": "Chair, Go Triangle",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 2.7905617372425695e-08,
+          "is_target": false
+        },
+        {
+          "node_idx": 1705,
+          "node_type": "User",
+          "label": "Vikas Vannappagari",
+          "profile_id": "TF_b2f97a1552575d25",
+          "workplace": "Business analyst specializing in data analysis & strategy development",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 4.991570676793344e-07,
+          "is_target": false
+        },
+        {
+          "node_idx": 1864,
+          "node_type": "User",
+          "label": "Robert Johnson",
+          "profile_id": "TF_30a972e78c69b5e9",
+          "workplace": "Meteorologist at Walt Disney Television",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 1.3652777397510363e-06,
+          "is_target": false
+        },
+        {
+          "node_idx": 1997,
+          "node_type": "User",
+          "label": "Michael Faas, CISSP",
+          "profile_id": "TF_9f7e9b55dc2167ae",
+          "workplace": "Director, Strategy & Risk | IT Executive | CIO | Consultant | IT Strategy | Cybersecurity",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 1.290349858212858e-11,
+          "is_target": false
+        },
+        {
+          "node_idx": 2061,
+          "node_type": "User",
+          "label": "Kerry Painter  CVE , CMP , CEM  (she/her/hers)",
+          "profile_id": "TF_c291cef1f52c8866",
+          "workplace": "Director/ General Manager of the Raleigh Convention and Performing Arts Complex at City of Raleigh Municipal Government",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 6.4268728117156115e-09,
+          "is_target": false
+        },
+        {
+          "node_idx": 2076,
+          "node_type": "User",
+          "label": "Sara Rafalson",
+          "profile_id": "TF_a18c069259a11dc3",
+          "workplace": "Vice President, Market Development & Public Policy at EVgo",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 4.518591334434774e-10,
+          "is_target": false
+        },
+        {
+          "node_idx": 2200,
+          "node_type": "User",
+          "label": "Kylie Marshall",
+          "profile_id": "TF_6c8d777598696578",
+          "workplace": "Digital Director at Cheri Beasley for North Carolina",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 2.8066239110557945e-07,
+          "is_target": false
+        },
+        {
+          "node_idx": 2237,
+          "node_type": "User",
+          "label": "John Burns",
+          "profile_id": "TF_4bae0feb46f855fb",
+          "workplace": "General Counsel - Carolinas Clean Energy Business Association",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 9.730914598549134e-07,
+          "is_target": false
+        },
+        {
+          "node_idx": 2465,
+          "node_type": "User",
+          "label": "Robert (Bob) Moore",
+          "profile_id": "TF_14d108f02b7e25e1",
+          "workplace": "Partner, Edgile Group of Wipro",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 2.5790123814317667e-08,
+          "is_target": false
+        },
+        {
+          "node_idx": 2518,
+          "node_type": "User",
+          "label": "Audrey Landau Townsend",
+          "profile_id": "TF_c3c06088b5aa6d4a",
+          "workplace": "Cardholder Exclusive Events, Capital One Entertainment",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 1.028680216563771e-07,
+          "is_target": false
+        },
+        {
+          "node_idx": 2536,
+          "node_type": "User",
+          "label": "Brett Bailey",
+          "profile_id": "TF_ac29c8fbb6535468",
+          "workplace": "Regional Vice President at Hawthorne Residential Partners",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 0.017188724130392075,
+          "is_target": true
+        },
+        {
+          "node_idx": 2684,
+          "node_type": "User",
+          "label": "Ben Snowden",
+          "profile_id": "TF_8bb0ad6ec3f05e5c",
+          "workplace": "Clean Energy and Environmental Lawyer",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 5.1733601139858365e-05,
+          "is_target": false
+        },
+        {
+          "node_idx": 2695,
+          "node_type": "User",
+          "label": "Dr. RaJade M. Berry-James",
+          "profile_id": "TF_51ec317493dd548a",
+          "workplace": "Senior Associate Dean of Faculty and Affairs, VCU Wilder School of Government and Public Affairs; Vice President & President-Elect of NASPAA; Chair of NAPA Social Equity in Governance Standing Panel",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 8.198910109058488e-06,
+          "is_target": false
+        },
+        {
+          "node_idx": 3168,
+          "node_type": "User",
+          "label": "Benjamin Smith",
+          "profile_id": "TF_5f98de306b2ca612",
+          "workplace": "Energy Attorney",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 0.002356958109885454,
+          "is_target": false
+        },
+        {
+          "node_idx": 3299,
+          "node_type": "User",
+          "label": "Dr. Courtney L. McCluney",
+          "profile_id": "TF_e8182c3323d6d7ea",
+          "workplace": "Recovering from Overwork | Writer | Consultant | Advisor",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 2.210690797088688e-10,
+          "is_target": false
+        },
+        {
+          "node_idx": 3328,
+          "node_type": "User",
+          "label": "Joe Rudisill",
+          "profile_id": "TF_8fc0a55b038f471c",
+          "workplace": "Chief Operating Officer at Mission Hospital",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 3.2884025131352246e-05,
+          "is_target": false
+        },
+        {
+          "node_idx": 3336,
+          "node_type": "User",
+          "label": "Dr. Saundra Wall Williams",
+          "profile_id": "TF_f16ccee2cc90b328",
+          "workplace": "Leadership & Career Development Coach & Mentor / CEO, WMS Consulting and Training / International Speaker / Corporate & Education Board Director / Faculty, NC State University / Trustee, Wake Tech Community College",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 1.7973598005482927e-06,
+          "is_target": false
+        },
+        {
+          "node_idx": 3487,
+          "node_type": "User",
+          "label": "Bill Higgins",
+          "profile_id": "TF_839b0d207b1c0414",
+          "workplace": "IBM Watson Research and Development",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 4.7145986172836274e-05,
+          "is_target": false
+        },
+        {
+          "node_idx": 3550,
+          "node_type": "User",
+          "label": "Steve Reader",
+          "profile_id": "TF_53784fc661d302b4",
+          "workplace": "Office Managing Partner",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 0.9536760449409485,
+          "is_target": false
+        },
+        {
+          "node_idx": 3581,
+          "node_type": "User",
+          "label": "Rhonda Sarmento, M.A.",
+          "profile_id": "TF_66763550340fde6d",
+          "workplace": "Talent Development | Coach | Relationship Builder",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 8.698345155266907e-09,
+          "is_target": false
+        },
+        {
+          "node_idx": 4787,
+          "node_type": "Company",
+          "label": "campus apartments",
+          "profile_id": null,
+          "workplace": null,
+          "is_fake": null,
+          "class_name": "Entity",
+          "relational_risk": null,
+          "is_target": false
+        },
+        {
+          "node_idx": 6592,
+          "node_type": "Company",
+          "label": "firstworthing",
+          "profile_id": null,
+          "workplace": null,
+          "is_fake": null,
+          "class_name": "Entity",
+          "relational_risk": null,
+          "is_target": false
+        },
+        {
+          "node_idx": 6751,
+          "node_type": "Company",
+          "label": "franklin holdings",
+          "profile_id": null,
+          "workplace": null,
+          "is_fake": null,
+          "class_name": "Entity",
+          "relational_risk": null,
+          "is_target": false
+        },
+        {
+          "node_idx": 7225,
+          "node_type": "Company",
+          "label": "hawthorne residential partners",
+          "profile_id": null,
+          "workplace": null,
+          "is_fake": null,
+          "class_name": "Entity",
+          "relational_risk": null,
+          "is_target": false
+        },
+        {
+          "node_idx": 10042,
+          "node_type": "Company",
+          "label": "regional vice president at hawthorne residential partners",
+          "profile_id": null,
+          "workplace": null,
+          "is_fake": null,
+          "class_name": "Entity",
+          "relational_risk": null,
+          "is_target": false
+        },
+        {
+          "node_idx": 14081,
+          "node_type": "Institute",
+          "label": "university of north carolina at chapel hill",
+          "profile_id": null,
+          "workplace": null,
+          "is_fake": null,
+          "class_name": "Entity",
+          "relational_risk": null,
+          "is_target": false
+        },
+        {
+          "node_idx": 14280,
+          "node_type": "Institute",
+          "label": "west davidson high school",
+          "profile_id": null,
+          "workplace": null,
+          "is_fake": null,
+          "class_name": "Entity",
+          "relational_risk": null,
+          "is_target": false
+        },
+        {
+          "node_idx": 15320,
+          "node_type": "Location",
+          "label": "greensboro, nc",
+          "profile_id": null,
+          "workplace": null,
+          "is_fake": null,
+          "class_name": "Entity",
+          "relational_risk": null,
+          "is_target": false
+        },
+        {
+          "node_idx": 16234,
+          "node_type": "Location",
+          "label": "raleigh, north carolina, united states",
+          "profile_id": null,
+          "workplace": null,
+          "is_fake": null,
+          "class_name": "Entity",
+          "relational_risk": null,
+          "is_target": false
+        }
+      ],
+      "edges": [
+        {
+          "source": 67,
+          "target": 14081,
+          "relation_name": "studied_at",
+          "relation_type": 2,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 14081,
+          "target": 67,
+          "relation_name": "educated",
+          "relation_type": 3,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 116,
+          "target": 14081,
+          "relation_name": "studied_at",
+          "relation_type": 2,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 14081,
+          "target": 116,
+          "relation_name": "educated",
+          "relation_type": 3,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 116,
+          "target": 16234,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 16234,
+          "target": 116,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 135,
+          "target": 16234,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 16234,
+          "target": 135,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 348,
+          "target": 14081,
+          "relation_name": "studied_at",
+          "relation_type": 2,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 14081,
+          "target": 348,
+          "relation_name": "educated",
+          "relation_type": 3,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 433,
+          "target": 16234,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 16234,
+          "target": 433,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 508,
+          "target": 14081,
+          "relation_name": "studied_at",
+          "relation_type": 2,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 14081,
+          "target": 508,
+          "relation_name": "educated",
+          "relation_type": 3,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 669,
+          "target": 16234,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 16234,
+          "target": 669,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 708,
+          "target": 14081,
+          "relation_name": "studied_at",
+          "relation_type": 2,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 14081,
+          "target": 708,
+          "relation_name": "educated",
+          "relation_type": 3,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 835,
+          "target": 16234,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 16234,
+          "target": 835,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 1209,
+          "target": 16234,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 16234,
+          "target": 1209,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 1360,
+          "target": 15320,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 15320,
+          "target": 1360,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 1589,
+          "target": 16234,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 16234,
+          "target": 1589,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 1705,
+          "target": 14081,
+          "relation_name": "studied_at",
+          "relation_type": 2,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 14081,
+          "target": 1705,
+          "relation_name": "educated",
+          "relation_type": 3,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 1864,
+          "target": 16234,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 16234,
+          "target": 1864,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 1997,
+          "target": 16234,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 16234,
+          "target": 1997,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 2061,
+          "target": 14081,
+          "relation_name": "studied_at",
+          "relation_type": 2,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 14081,
+          "target": 2061,
+          "relation_name": "educated",
+          "relation_type": 3,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 2061,
+          "target": 16234,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 16234,
+          "target": 2061,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 2076,
+          "target": 14081,
+          "relation_name": "studied_at",
+          "relation_type": 2,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 14081,
+          "target": 2076,
+          "relation_name": "educated",
+          "relation_type": 3,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 2200,
+          "target": 14081,
+          "relation_name": "studied_at",
+          "relation_type": 2,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 14081,
+          "target": 2200,
+          "relation_name": "educated",
+          "relation_type": 3,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 2200,
+          "target": 16234,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 16234,
+          "target": 2200,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 2237,
+          "target": 16234,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 16234,
+          "target": 2237,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 2465,
+          "target": 16234,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 16234,
+          "target": 2465,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 2518,
+          "target": 14081,
+          "relation_name": "studied_at",
+          "relation_type": 2,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 14081,
+          "target": 2518,
+          "relation_name": "educated",
+          "relation_type": 3,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 2536,
+          "target": 4787,
+          "relation_name": "worked_at",
+          "relation_type": 0,
+          "importance_weight": 0.95
+        },
+        {
+          "source": 4787,
+          "target": 2536,
+          "relation_name": "employs",
+          "relation_type": 1,
+          "importance_weight": 0.95
+        },
+        {
+          "source": 2536,
+          "target": 6751,
+          "relation_name": "worked_at",
+          "relation_type": 0,
+          "importance_weight": 0.95
+        },
+        {
+          "source": 6751,
+          "target": 2536,
+          "relation_name": "employs",
+          "relation_type": 1,
+          "importance_weight": 0.95
+        },
+        {
+          "source": 2536,
+          "target": 6592,
+          "relation_name": "worked_at",
+          "relation_type": 0,
+          "importance_weight": 0.95
+        },
+        {
+          "source": 6592,
+          "target": 2536,
+          "relation_name": "employs",
+          "relation_type": 1,
+          "importance_weight": 0.95
+        },
+        {
+          "source": 2536,
+          "target": 7225,
+          "relation_name": "worked_at",
+          "relation_type": 0,
+          "importance_weight": 0.95
+        },
+        {
+          "source": 7225,
+          "target": 2536,
+          "relation_name": "employs",
+          "relation_type": 1,
+          "importance_weight": 0.95
+        },
+        {
+          "source": 2536,
+          "target": 10042,
+          "relation_name": "worked_at",
+          "relation_type": 0,
+          "importance_weight": 0.95
+        },
+        {
+          "source": 10042,
+          "target": 2536,
+          "relation_name": "employs",
+          "relation_type": 1,
+          "importance_weight": 0.95
+        },
+        {
+          "source": 2536,
+          "target": 14280,
+          "relation_name": "studied_at",
+          "relation_type": 2,
+          "importance_weight": 0.95
+        },
+        {
+          "source": 14280,
+          "target": 2536,
+          "relation_name": "educated",
+          "relation_type": 3,
+          "importance_weight": 0.95
+        },
+        {
+          "source": 2536,
+          "target": 14081,
+          "relation_name": "studied_at",
+          "relation_type": 2,
+          "importance_weight": 0.95
+        },
+        {
+          "source": 14081,
+          "target": 2536,
+          "relation_name": "educated",
+          "relation_type": 3,
+          "importance_weight": 0.95
+        },
+        {
+          "source": 2536,
+          "target": 15320,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.95
+        },
+        {
+          "source": 15320,
+          "target": 2536,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.95
+        },
+        {
+          "source": 2536,
+          "target": 16234,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.95
+        },
+        {
+          "source": 16234,
+          "target": 2536,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.95
+        },
+        {
+          "source": 2684,
+          "target": 16234,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 16234,
+          "target": 2684,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 2695,
+          "target": 16234,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 16234,
+          "target": 2695,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 3168,
+          "target": 16234,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 16234,
+          "target": 3168,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 3299,
+          "target": 14081,
+          "relation_name": "studied_at",
+          "relation_type": 2,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 14081,
+          "target": 3299,
+          "relation_name": "educated",
+          "relation_type": 3,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 3328,
+          "target": 14081,
+          "relation_name": "studied_at",
+          "relation_type": 2,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 14081,
+          "target": 3328,
+          "relation_name": "educated",
+          "relation_type": 3,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 3336,
+          "target": 14081,
+          "relation_name": "studied_at",
+          "relation_type": 2,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 14081,
+          "target": 3336,
+          "relation_name": "educated",
+          "relation_type": 3,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 3487,
+          "target": 16234,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 16234,
+          "target": 3487,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 3550,
+          "target": 16234,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 16234,
+          "target": 3550,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 3581,
+          "target": 14081,
+          "relation_name": "studied_at",
+          "relation_type": 2,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 14081,
+          "target": 3581,
+          "relation_name": "educated",
+          "relation_type": 3,
+          "importance_weight": 0.4
+        }
+      ],
+      "archetype": "Legitimate Executive",
+      "description": "Organic career network across enterprise organizations"
+    },
+    {
+      "target_user": {
+        "node_idx": 2534,
+        "node_type": "User",
+        "label": "User_TF_ccd74509dfc347e4",
+        "profile_id": "TF_ccd74509dfc347e4",
+        "workplace": "nan",
+        "is_fake": 1,
+        "class_name": "chatgpt_fake",
+        "relational_risk": 0.9999717473983765
+      },
+      "subgraph_stats": {
+        "num_subgraph_nodes": 1,
+        "num_subgraph_edges": 0,
+        "num_connected_users": 0,
+        "num_fake_neighbors": 0,
+        "sybil_density_pct": 0.0,
+        "is_isolated_sybil_cluster": false
+      },
+      "top_relational_paths": [],
+      "nodes": [
+        {
+          "node_idx": 2534,
+          "node_type": "User",
+          "label": "User_TF_ccd74509dfc347e4",
+          "profile_id": "TF_ccd74509dfc347e4",
+          "workplace": "nan",
+          "is_fake": 1,
+          "class_name": "chatgpt_fake",
+          "relational_risk": 0.9999717473983765,
+          "is_target": true
+        }
+      ],
+      "edges": [],
+      "archetype": "ChatGPT Recruiter Fake",
+      "description": "Coordinated Sybil recruitment cluster sharing shell workplaces"
+    },
+    {
+      "target_user": {
+        "node_idx": 2533,
+        "node_type": "User",
+        "label": "\u751c\u5fc3\u5973\u738b",
+        "profile_id": "TF_89284f468c65731b",
+        "workplace": "Market Research Manager",
+        "is_fake": 1,
+        "class_name": "manual_fake",
+        "relational_risk": 0.9999995231628418
+      },
+      "subgraph_stats": {
+        "num_subgraph_nodes": 264,
+        "num_subgraph_edges": 536,
+        "num_connected_users": 260,
+        "num_fake_neighbors": 114,
+        "sybil_density_pct": 43.85,
+        "is_isolated_sybil_cluster": false
+      },
+      "top_relational_paths": [
+        {
+          "entity_type": "Company",
+          "entity_name": "market research manager",
+          "connected_user_id": "TF_59a33f62b080a9c3",
+          "connected_user_name": "Yu Li",
+          "connected_user_class": "manual_fake",
+          "connected_user_is_fake": 1,
+          "connected_user_risk": 0.999941349029541,
+          "is_sybil_link": true,
+          "path_narrative": "\u751c\u5fc3\u5973\u738b --[worked_at]--> Company('market research manager') <--[worked_at]-- Yu Li (manual_fake)",
+          "importance_weight": 0.95
+        },
+        {
+          "entity_type": "Company",
+          "entity_name": "market research manager",
+          "connected_user_id": "TF_69d858ec657ff1ca",
+          "connected_user_name": "pigeon Lee",
+          "connected_user_class": "manual_fake",
+          "connected_user_is_fake": 1,
+          "connected_user_risk": 0.9999983310699463,
+          "is_sybil_link": true,
+          "path_narrative": "\u751c\u5fc3\u5973\u738b --[worked_at]--> Company('market research manager') <--[worked_at]-- pigeon Lee (manual_fake)",
+          "importance_weight": 0.95
+        },
+        {
+          "entity_type": "Company",
+          "entity_name": "market research manager",
+          "connected_user_id": "TF_a861f60d11b3e409",
+          "connected_user_name": "Joanna tu",
+          "connected_user_class": "manual_fake",
+          "connected_user_is_fake": 1,
+          "connected_user_risk": 1.0,
+          "is_sybil_link": true,
+          "path_narrative": "\u751c\u5fc3\u5973\u738b --[worked_at]--> Company('market research manager') <--[worked_at]-- Joanna tu (manual_fake)",
+          "importance_weight": 0.95
+        },
+        {
+          "entity_type": "Company",
+          "entity_name": "market research manager",
+          "connected_user_id": "TF_1d525ad7a91efc92",
+          "connected_user_name": "\u9c9c\u69a8\u679c\u6c41",
+          "connected_user_class": "manual_fake",
+          "connected_user_is_fake": 1,
+          "connected_user_risk": 0.9999995231628418,
+          "is_sybil_link": true,
+          "path_narrative": "\u751c\u5fc3\u5973\u738b --[worked_at]--> Company('market research manager') <--[worked_at]-- \u9c9c\u69a8\u679c\u6c41 (manual_fake)",
+          "importance_weight": 0.95
+        }
+      ],
+      "nodes": [
+        {
+          "node_idx": 28,
+          "node_type": "User",
+          "label": "Shihan Yun",
+          "profile_id": "TF_3654fc1cd2d57dbd",
+          "workplace": "Core Consulting Solutions Technical Expert | Leadership | Decision Making | Strategic Cooperation | Strategic Planning | Enterprise Development",
+          "is_fake": 1,
+          "class_name": "manual_fake",
+          "relational_risk": 0.9999961853027344,
+          "is_target": false
+        },
+        {
+          "node_idx": 36,
+          "node_type": "User",
+          "label": "Kristy Gateley",
+          "profile_id": "TF_9581641ca6ce639e",
+          "workplace": "Building software to help tackle the climate crisis",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 3.4364800285402453e-06,
+          "is_target": false
+        },
+        {
+          "node_idx": 48,
+          "node_type": "User",
+          "label": "Cara Costigan",
+          "profile_id": "TF_1ae2ac2ac4c7f817",
+          "workplace": "Dreamer, Recruiter, Innovator",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 1.1120716862933477e-06,
+          "is_target": false
+        },
+        {
+          "node_idx": 61,
+          "node_type": "User",
+          "label": "Roger Lumpp III",
+          "profile_id": "TF_7492f3aff55909bd",
+          "workplace": "Project/Interim Labor Expert | Future of Work Thought Leader",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 1.2210548447910696e-06,
+          "is_target": false
+        },
+        {
+          "node_idx": 68,
+          "node_type": "User",
+          "label": "Laura Newinski",
+          "profile_id": "TF_49df44ccee75bad9",
+          "workplace": "Deputy Chair and COO at KPMG US",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 4.483371895958044e-08,
+          "is_target": false
+        },
+        {
+          "node_idx": 79,
+          "node_type": "User",
+          "label": "Judy Chen",
+          "profile_id": "TF_b19f2761fb98d3d0",
+          "workplace": "Chanel Market Development Manager",
+          "is_fake": 1,
+          "class_name": "manual_fake",
+          "relational_risk": 0.9999995231628418,
+          "is_target": false
+        },
+        {
+          "node_idx": 89,
+          "node_type": "User",
+          "label": "Sastry Durvasula",
+          "profile_id": "TF_5314c93646bdabe4",
+          "workplace": "Chief Information and Client Services Officer",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 3.000126258534408e-10,
+          "is_target": false
+        },
+        {
+          "node_idx": 94,
+          "node_type": "User",
+          "label": "Candy M",
+          "profile_id": "TF_55c89c6f64e92c4b",
+          "workplace": "Manager and Vice President",
+          "is_fake": 1,
+          "class_name": "manual_fake",
+          "relational_risk": 1.0,
+          "is_target": false
+        },
+        {
+          "node_idx": 113,
+          "node_type": "User",
+          "label": "Kate Blazie",
+          "profile_id": "TF_d8a7ebc19e7882b8",
+          "workplace": "Global Change Partner, Vice President at Genpact",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 2.530032006120564e-08,
+          "is_target": false
+        },
+        {
+          "node_idx": 114,
+          "node_type": "User",
+          "label": "Connie Co",
+          "profile_id": "TF_6e058e7baca16aea",
+          "workplace": "--Origins - Manager and Vice President",
+          "is_fake": 1,
+          "class_name": "manual_fake",
+          "relational_risk": 0.999998927116394,
+          "is_target": false
+        },
+        {
+          "node_idx": 122,
+          "node_type": "User",
+          "label": "Li Connie",
+          "profile_id": "TF_10ba0553a869a00c",
+          "workplace": "Origins - Manager and Vice President",
+          "is_fake": 1,
+          "class_name": "manual_fake",
+          "relational_risk": 1.0,
+          "is_target": false
+        },
+        {
+          "node_idx": 137,
+          "node_type": "User",
+          "label": "Dr. John C. Turner",
+          "profile_id": "TF_000b79b45661458b",
+          "workplace": "Award Winning PhD Educator / Celeb Scholar\u2122\ufe0f/Public Speaker / 3x Ronald E. McNair Scholar (IND ST, IUB, IUPUI)/ Students, Educators, Families, & Communities of Color Advocate",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 6.329305968222343e-10,
+          "is_target": false
+        },
+        {
+          "node_idx": 154,
+          "node_type": "User",
+          "label": "Wu xinlei",
+          "profile_id": "TF_40994f2c473f9fc6",
+          "workplace": "Investment Manager-Gv",
+          "is_fake": 1,
+          "class_name": "manual_fake",
+          "relational_risk": 0.9999996423721313,
+          "is_target": false
+        },
+        {
+          "node_idx": 178,
+          "node_type": "User",
+          "label": "Shaolin Maya",
+          "profile_id": "TF_ac47f6ecda1d8367",
+          "workplace": "Manager",
+          "is_fake": 1,
+          "class_name": "manual_fake",
+          "relational_risk": 1.0,
+          "is_target": false
+        },
+        {
+          "node_idx": 206,
+          "node_type": "User",
+          "label": "Denise Redmond",
+          "profile_id": "TF_68c7d58822d3f2ce",
+          "workplace": "VP Business Management",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 0.0001403606729581952,
+          "is_target": false
+        },
+        {
+          "node_idx": 213,
+          "node_type": "User",
+          "label": "Enrico Viale",
+          "profile_id": "TF_40fca13296bd1445",
+          "workplace": "Head of Enel North America",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 7.31177642592229e-05,
+          "is_target": false
+        },
+        {
+          "node_idx": 217,
+          "node_type": "User",
+          "label": "Emily M \u2728\u2728",
+          "profile_id": "TF_5741ffb427db523d",
+          "workplace": "Manager and Vice President ,  Supervisor , Sales Assistant",
+          "is_fake": 1,
+          "class_name": "manual_fake",
+          "relational_risk": 1.0,
+          "is_target": false
+        },
+        {
+          "node_idx": 230,
+          "node_type": "User",
+          "label": "Ryan Tucker",
+          "profile_id": "TF_8d61e973d2c6b35c",
+          "workplace": "Co-Founder and CRO at Hakkoda",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 2.1023212684601056e-11,
+          "is_target": false
+        },
+        {
+          "node_idx": 258,
+          "node_type": "User",
+          "label": "Adriano Lujan, MPA",
+          "profile_id": "TF_ae2083b794f1e189",
+          "workplace": "Marketing and Growth Manager for Optum",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 7.08000840177192e-08,
+          "is_target": false
+        },
+        {
+          "node_idx": 263,
+          "node_type": "User",
+          "label": "Christiane Campbell",
+          "profile_id": "TF_4289e03add34386e",
+          "workplace": "--",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 2.2495075882034143e-06,
+          "is_target": false
+        },
+        {
+          "node_idx": 281,
+          "node_type": "User",
+          "label": "Josie ( Jenny )\ud83d\udc96\ud83d\udc96\ud83d\udc96\ud83d\udc96",
+          "profile_id": "TF_86ec804be0cc3944",
+          "workplace": "Director of Human Resources",
+          "is_fake": 1,
+          "class_name": "manual_fake",
+          "relational_risk": 0.9999996423721313,
+          "is_target": false
+        },
+        {
+          "node_idx": 287,
+          "node_type": "User",
+          "label": "Giorgina T.",
+          "profile_id": "TF_7407145cfde0652a",
+          "workplace": "Sr. Manager - Partner Success at Salesforce",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 0.00014460430247709155,
+          "is_target": false
+        },
+        {
+          "node_idx": 295,
+          "node_type": "User",
+          "label": "Yu Li",
+          "profile_id": "TF_59a33f62b080a9c3",
+          "workplace": "Market Research Manager",
+          "is_fake": 1,
+          "class_name": "manual_fake",
+          "relational_risk": 0.999941349029541,
+          "is_target": false
+        },
+        {
+          "node_idx": 321,
+          "node_type": "User",
+          "label": "Deval M. Desai",
+          "profile_id": "TF_7e5023bd105e1ebf",
+          "workplace": "Senior Director at KPMG",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 1.9812972595900646e-08,
+          "is_target": false
+        },
+        {
+          "node_idx": 336,
+          "node_type": "User",
+          "label": "Tonya Robinson",
+          "profile_id": "TF_bd3c9836a99743ae",
+          "workplace": "Vice Chair and General Counsel at KPMG US",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 3.274483049153787e-07,
+          "is_target": false
+        },
+        {
+          "node_idx": 338,
+          "node_type": "User",
+          "label": "Aria Jenny",
+          "profile_id": "TF_c94fe8feaa1392dc",
+          "workplace": "Director of Human Resources",
+          "is_fake": 1,
+          "class_name": "manual_fake",
+          "relational_risk": 0.9999998807907104,
+          "is_target": false
+        },
+        {
+          "node_idx": 359,
+          "node_type": "User",
+          "label": "Advaith Reddy",
+          "profile_id": "TF_f5ea0fb5d3a6bf42",
+          "workplace": "Project Manager at CarMax",
+          "is_fake": 1,
+          "class_name": "manual_fake",
+          "relational_risk": 0.9999078512191772,
+          "is_target": false
+        },
+        {
+          "node_idx": 383,
+          "node_type": "User",
+          "label": "Matt Whitteker",
+          "profile_id": "TF_5c46808810ba435a",
+          "workplace": "Co-Founder CEO at MILLIONS.CO & Unicorn SaaS Founder at Assent",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 7.74963409639895e-05,
+          "is_target": false
+        },
+        {
+          "node_idx": 385,
+          "node_type": "User",
+          "label": "Casey Little",
+          "profile_id": "TF_769e400c222d9b46",
+          "workplace": "Head of Product - Capital One Entertainment & Capital One Dining",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 3.442517595431127e-07,
+          "is_target": false
+        },
+        {
+          "node_idx": 386,
+          "node_type": "User",
+          "label": "Michael J. R.",
+          "profile_id": "TF_742737452f27cd15",
+          "workplace": "Director | Manager | Leader | Volunteer | Co-Founder | Executive | Board Member | President | Advocate | Advisor | Author | Public Speaker | Consultant",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 8.469665857546715e-09,
+          "is_target": false
+        },
+        {
+          "node_idx": 392,
+          "node_type": "User",
+          "label": "Jenny\u2763 Tim",
+          "profile_id": "TF_f70052d254436a66",
+          "workplace": "--Human Resources Services",
+          "is_fake": 1,
+          "class_name": "manual_fake",
+          "relational_risk": 0.9999908208847046,
+          "is_target": false
+        },
+        {
+          "node_idx": 398,
+          "node_type": "User",
+          "label": "Yamin Gonzalez",
+          "profile_id": "TF_6e473284c13ff825",
+          "workplace": "VP, Preferred Lending Market Leader",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 7.820063729013782e-06,
+          "is_target": false
+        },
+        {
+          "node_idx": 408,
+          "node_type": "User",
+          "label": "Jason Burwen",
+          "profile_id": "TF_70297cf48097fc55",
+          "workplace": "VP Energy Storage at American Clean Power Association (ACP)",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 3.110319084953517e-05,
+          "is_target": false
+        },
+        {
+          "node_idx": 441,
+          "node_type": "User",
+          "label": "orange Aubrey",
+          "profile_id": "TF_c05a7f1a24648355",
+          "workplace": "Elizabeth Arden- Manager",
+          "is_fake": 1,
+          "class_name": "manual_fake",
+          "relational_risk": 1.0,
+          "is_target": false
+        },
+        {
+          "node_idx": 459,
+          "node_type": "User",
+          "label": "X X",
+          "profile_id": "TF_aefc0bf3c67dda89",
+          "workplace": "Origins - Manager and Vice President",
+          "is_fake": 1,
+          "class_name": "manual_fake",
+          "relational_risk": 0.9999943971633911,
+          "is_target": false
+        },
+        {
+          "node_idx": 468,
+          "node_type": "User",
+          "label": "Charles T. Henry",
+          "profile_id": "TF_854e5959075212f2",
+          "workplace": "Freelance Broadcast/Studio & Live Event Camera Operator",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 1.336622972303303e-06,
+          "is_target": false
+        },
+        {
+          "node_idx": 535,
+          "node_type": "User",
+          "label": "Beatrice Gordon, PhD",
+          "profile_id": "TF_3738335fc3db073a",
+          "workplace": "Hydrologist",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 4.451406130101532e-05,
+          "is_target": false
+        },
+        {
+          "node_idx": 563,
+          "node_type": "User",
+          "label": "Rosie S",
+          "profile_id": "TF_ea12ead012b2b6ea",
+          "workplace": "Freelancer at Leading lite It",
+          "is_fake": 1,
+          "class_name": "manual_fake",
+          "relational_risk": 0.9999904632568359,
+          "is_target": false
+        },
+        {
+          "node_idx": 595,
+          "node_type": "User",
+          "label": "Roxana Borges",
+          "profile_id": "TF_574e265cffe2b412",
+          "workplace": "East Small Business Performance Executive",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 3.803794243140146e-05,
+          "is_target": false
+        },
+        {
+          "node_idx": 605,
+          "node_type": "User",
+          "label": "Zelda Lin",
+          "profile_id": "TF_622c5d013198f5b9",
+          "workplace": "Direct Investor Business",
+          "is_fake": 1,
+          "class_name": "manual_fake",
+          "relational_risk": 0.999923825263977,
+          "is_target": false
+        },
+        {
+          "node_idx": 613,
+          "node_type": "User",
+          "label": "Rehana Kelly",
+          "profile_id": "TF_58de9cd8bcf155f2",
+          "workplace": "Estee Lauder Marketing Department Research Manager",
+          "is_fake": 1,
+          "class_name": "manual_fake",
+          "relational_risk": 0.9999861717224121,
+          "is_target": false
+        },
+        {
+          "node_idx": 623,
+          "node_type": "User",
+          "label": "Faith Vel",
+          "profile_id": "TF_f78baae927449131",
+          "workplace": "Director Of Marketing And Development",
+          "is_fake": 1,
+          "class_name": "manual_fake",
+          "relational_risk": 0.9999996423721313,
+          "is_target": false
+        },
+        {
+          "node_idx": 638,
+          "node_type": "User",
+          "label": "Jinqi Cao",
+          "profile_id": "TF_73a85bae01065bf3",
+          "workplace": "-Core Consulting Solutions Technical Expert | Leadership | Decision Making | Strategic Cooperation | Strategic Planning | Enterprise Development",
+          "is_fake": 1,
+          "class_name": "manual_fake",
+          "relational_risk": 0.9999775886535645,
+          "is_target": false
+        },
+        {
+          "node_idx": 644,
+          "node_type": "User",
+          "label": "Khuyen Tran",
+          "profile_id": "TF_7054501609546d3d",
+          "workplace": "DevRel Engineer @ Prefect | Share 600+ daily tips on Python and data science",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 1.3259295883472078e-08,
+          "is_target": false
+        },
+        {
+          "node_idx": 672,
+          "node_type": "User",
+          "label": "Shelly (Delia) Hawston",
+          "profile_id": "TF_cbc0083d217ada9d",
+          "workplace": "Director of Marketing Development/Fractional Marketing Director/ Social Media and Business development Manager/ Content Marketer",
+          "is_fake": 1,
+          "class_name": "manual_fake",
+          "relational_risk": 0.9999926090240479,
+          "is_target": false
+        },
+        {
+          "node_idx": 687,
+          "node_type": "User",
+          "label": "pigeon Lee",
+          "profile_id": "TF_69d858ec657ff1ca",
+          "workplace": "market research manager",
+          "is_fake": 1,
+          "class_name": "manual_fake",
+          "relational_risk": 0.9999983310699463,
+          "is_target": false
+        },
+        {
+          "node_idx": 701,
+          "node_type": "User",
+          "label": "Con Nie",
+          "profile_id": "TF_52c3fd5e842773f3",
+          "workplace": "Origins - Manager and Vice President",
+          "is_fake": 1,
+          "class_name": "manual_fake",
+          "relational_risk": 1.0,
+          "is_target": false
+        },
+        {
+          "node_idx": 712,
+          "node_type": "User",
+          "label": "Joanna. ve",
+          "profile_id": "TF_775bc8cc2d4f470f",
+          "workplace": "Market Research Manager - Elizabeth Arden",
+          "is_fake": 1,
+          "class_name": "manual_fake",
+          "relational_risk": 0.9999998807907104,
+          "is_target": false
+        },
+        {
+          "node_idx": 730,
+          "node_type": "User",
+          "label": "Anna lin",
+          "profile_id": "TF_80a61fb65265703d",
+          "workplace": "Allie Professional Cosmetics",
+          "is_fake": 1,
+          "class_name": "manual_fake",
+          "relational_risk": 0.9999828338623047,
+          "is_target": false
+        },
+        {
+          "node_idx": 735,
+          "node_type": "User",
+          "label": "Anant Trivedi",
+          "profile_id": "TF_9e1f6310a52135a6",
+          "workplace": "General Manager,  Wipro Technologies",
+          "is_fake": 0,
+          "class_name": "legitimate",
+          "relational_risk": 1.140060916782204e-07,
+          "is_target": false
+        }
+      ],
+      "edges": [
+        {
+          "source": 28,
+          "target": 16722,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 16722,
+          "target": 28,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 36,
+          "target": 16722,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 16722,
+          "target": 36,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 48,
+          "target": 16722,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 16722,
+          "target": 48,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 61,
+          "target": 16722,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 16722,
+          "target": 61,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 68,
+          "target": 16722,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 16722,
+          "target": 68,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 79,
+          "target": 16722,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 16722,
+          "target": 79,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 89,
+          "target": 16722,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 16722,
+          "target": 89,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 94,
+          "target": 16722,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 16722,
+          "target": 94,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 113,
+          "target": 16722,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 16722,
+          "target": 113,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 114,
+          "target": 16722,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 16722,
+          "target": 114,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 122,
+          "target": 16722,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 16722,
+          "target": 122,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 137,
+          "target": 16722,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 16722,
+          "target": 137,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 154,
+          "target": 16722,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 16722,
+          "target": 154,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 178,
+          "target": 16722,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 16722,
+          "target": 178,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 206,
+          "target": 16722,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 16722,
+          "target": 206,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 213,
+          "target": 16722,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 16722,
+          "target": 213,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 217,
+          "target": 16722,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 16722,
+          "target": 217,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 230,
+          "target": 16722,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 16722,
+          "target": 230,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 258,
+          "target": 16722,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 16722,
+          "target": 258,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 263,
+          "target": 16722,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 16722,
+          "target": 263,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 281,
+          "target": 16722,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 16722,
+          "target": 281,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 287,
+          "target": 16722,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 16722,
+          "target": 287,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 295,
+          "target": 8520,
+          "relation_name": "worked_at",
+          "relation_type": 0,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 8520,
+          "target": 295,
+          "relation_name": "employs",
+          "relation_type": 1,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 321,
+          "target": 16722,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 16722,
+          "target": 321,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 336,
+          "target": 16722,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 16722,
+          "target": 336,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 338,
+          "target": 16722,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 16722,
+          "target": 338,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 359,
+          "target": 16722,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 16722,
+          "target": 359,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 383,
+          "target": 16722,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 16722,
+          "target": 383,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 385,
+          "target": 16722,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 16722,
+          "target": 385,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 386,
+          "target": 16722,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 16722,
+          "target": 386,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 392,
+          "target": 16722,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 16722,
+          "target": 392,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 398,
+          "target": 16722,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 16722,
+          "target": 398,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 408,
+          "target": 16722,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 16722,
+          "target": 408,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 441,
+          "target": 6189,
+          "relation_name": "worked_at",
+          "relation_type": 0,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 6189,
+          "target": 441,
+          "relation_name": "employs",
+          "relation_type": 1,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 441,
+          "target": 16722,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 16722,
+          "target": 441,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 459,
+          "target": 16722,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 16722,
+          "target": 459,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 468,
+          "target": 16722,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 16722,
+          "target": 468,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 535,
+          "target": 16722,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 16722,
+          "target": 535,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 563,
+          "target": 16722,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 16722,
+          "target": 563,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 595,
+          "target": 16722,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 16722,
+          "target": 595,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 605,
+          "target": 16722,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 16722,
+          "target": 605,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 613,
+          "target": 16722,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 16722,
+          "target": 613,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 623,
+          "target": 16722,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 16722,
+          "target": 623,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 638,
+          "target": 16722,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 16722,
+          "target": 638,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 644,
+          "target": 16722,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 16722,
+          "target": 644,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.4
+        },
+        {
+          "source": 672,
+          "target": 16722,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 16722,
+          "target": 672,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 687,
+          "target": 8520,
+          "relation_name": "worked_at",
+          "relation_type": 0,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 8520,
+          "target": 687,
+          "relation_name": "employs",
+          "relation_type": 1,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 701,
+          "target": 16722,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 16722,
+          "target": 701,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 712,
+          "target": 6189,
+          "relation_name": "worked_at",
+          "relation_type": 0,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 6189,
+          "target": 712,
+          "relation_name": "employs",
+          "relation_type": 1,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 730,
+          "target": 16722,
+          "relation_name": "located_in",
+          "relation_type": 4,
+          "importance_weight": 0.85
+        },
+        {
+          "source": 16722,
+          "target": 730,
+          "relation_name": "contains_user",
+          "relation_type": 5,
+          "importance_weight": 0.85
+        }
+      ],
+      "archetype": "Manual Phishing Impersonator",
+      "description": "Logo impersonation account with suspicious co-affiliations"
+    },
+    {
+      "target_user": {
+        "node_idx": 2564,
+        "node_type": "User",
+        "label": "User_TF_be4ecb78eebc777b",
+        "profile_id": "TF_be4ecb78eebc777b",
+        "workplace": "nan",
+        "is_fake": 1,
+        "class_name": "chatgpt_fake",
+        "relational_risk": 0.9998874664306641
+      },
+      "subgraph_stats": {
+        "num_subgraph_nodes": 1,
+        "num_subgraph_edges": 0,
+        "num_connected_users": 0,
+        "num_fake_neighbors": 0,
+        "sybil_density_pct": 0.0,
+        "is_isolated_sybil_cluster": false
+      },
+      "top_relational_paths": [],
+      "nodes": [
+        {
+          "node_idx": 2564,
+          "node_type": "User",
+          "label": "User_TF_be4ecb78eebc777b",
+          "profile_id": "TF_be4ecb78eebc777b",
+          "workplace": "nan",
+          "is_fake": 1,
+          "class_name": "chatgpt_fake",
+          "relational_risk": 0.9998874664306641,
+          "is_target": true
+        }
+      ],
+      "edges": [],
+      "archetype": "Cold-Start Account (No Photo)",
+      "description": "Relational verification operates independently of visual presence"
+    }
+  ]
+}

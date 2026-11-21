@@ -1,0 +1,11 @@
+{
+  "model_name": "roberta-base",
+  "pca_components": 150,
+  "explained_variance_ratio": 0.9698643088340759,
+  "train_samples": 2533,
+  "test_samples": 1086,
+  "input_embedding_dim": 768,
+  "fused_feature_dim": 156,
+  "output_representation_dim": 64,
+  "temporal_forensics_status": "Modular engine active; zero-weight cold-start configured for static profiles."
+}

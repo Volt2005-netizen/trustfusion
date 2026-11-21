@@ -219,7 +219,17 @@ __marimo__/
 
 # TrustFusion research datasets and generated data
 data/raw/
-data/processed/
+data/processed/cleaned_profiles.csv
+data/processed/train.csv
+data/processed/visual/images/
+data/processed/visual/*.zip
+data/processed/text/
+data/processed/numerical/
+data/processed/linguistic/X_train*
+data/processed/linguistic/train_*
+data/processed/relational/train_*
+data/processed/relational/gate3_rgcn_model.pt
+data/processed/fusion/*train*
 
 # IDE
 .vscode/

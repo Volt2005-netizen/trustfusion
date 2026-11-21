@@ -1,0 +1,70 @@
+{
+  "project": "TrustFusion",
+  "random_state": 42,
+  "test_size": 1086,
+  "split_strategy": "stratified row-level split",
+  "source_files": [
+    "data\\raw\\LinkedIn_Dataset.pcl",
+    "data\\raw\\generated_profiles_NEW.csv"
+  ],
+  "dataset_size": 3619,
+  "train_size": 2533,
+  "label_counts_all": {
+    "0": 1800,
+    "1": 599,
+    "10": 600,
+    "11": 600,
+    "12": 20
+  },
+  "class_4_counts_all": {
+    "0": 1800,
+    "1": 599,
+    "2": 1200,
+    "3": 20
+  },
+  "binary_counts_all": {
+    "0": 1800,
+    "1": 1819
+  },
+  "numerical_features": {
+    "train_shape": [
+      2533,
+      17
+    ],
+    "test_shape": [
+      1086,
+      17
+    ],
+    "feature_names": [
+      "Number of Experiences",
+      "Number of Educations",
+      "Number of Licenses",
+      "Number of Volunteering",
+      "Number of Skills",
+      "Number of Recommendations",
+      "Number of Projects",
+      "Number of Publications",
+      "Number of Courses",
+      "Number of Honors",
+      "Number of Scores",
+      "Number of Languages",
+      "Number of Organizations",
+      "Number of Interests",
+      "Number of Activities",
+      "Connections",
+      "Followers"
+    ]
+  },
+  "duplicate_report": {
+    "exact_duplicate_rows": 0,
+    "duplicate_profile_ids": 0,
+    "duplicate_full_name": 1180,
+    "duplicate_profile_content_ignoring_label": 0
+  },
+  "notes": [
+    "RoBERTa/STE/PCA is handled by the linguistic gate.",
+    "Visual pHash/Milvus is handled by Gate 1.",
+    "RGCN/Louvain is handled by Gate 3.",
+    "GPT-4 adversarial rows are only those physically present in the source file."
+  ]
+}

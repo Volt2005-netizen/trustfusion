@@ -1,0 +1,14 @@
+{
+  "num_users": 3619,
+  "train_users": 2533,
+  "test_users": 1086,
+  "num_companies": 8687,
+  "num_institutes": 2043,
+  "num_locations": 2621,
+  "total_graph_nodes": 16970,
+  "total_directed_edges": 45536,
+  "num_relations": 6,
+  "relational_embedding_dim": 64,
+  "louvain_modularity": 0.5165763831017742,
+  "anti_leakage": "Loss evaluated strictly on train_mask; test nodes evaluated without supervision."
+}

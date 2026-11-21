@@ -1,0 +1,14 @@
+{
+  "visual_embedding_dim": 64,
+  "train_samples": 2533,
+  "test_samples": 1086,
+  "train_active_photos": 2159,
+  "train_cold_start_photos": 374,
+  "test_active_photos": 922,
+  "test_cold_start_photos": 164,
+  "test_active_accuracy": 0.8177874186550976,
+  "test_active_f1": 0.8518518518518519,
+  "test_active_roc_auc": 0.828272810137104,
+  "sybil_collision_pairs_detected": 1427,
+  "anti_leakage": "Images sampled from non-overlapping train and test pools; test set strictly unseen."
+}

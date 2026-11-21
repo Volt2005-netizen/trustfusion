@@ -1,0 +1,34 @@
+# Git & IDE
+.git/
+.gitignore
+.vscode/
+.idea/
+
+# Virtual Environments & Caches
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+catboost_info/
+
+# Raw and Heavy Training-Only Datasets
+data/raw/
+data/processed/cleaned_profiles.csv
+data/processed/train.csv
+data/processed/visual/images/
+data/processed/visual/*.zip
+data/processed/text/
+data/processed/numerical/
+data/processed/linguistic/X_train*
+data/processed/linguistic/train_*
+data/processed/relational/train_*
+data/processed/relational/gate3_rgcn_model.pt
+data/processed/fusion/*train*
+
+# Test logs & scratch
+scratch/
+tests/
+*.log

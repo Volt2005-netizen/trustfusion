@@ -1,0 +1,41 @@
+{
+  "project": "TrustFusion Step 5: Multi-Modal Attention Gating & Decision Ensemble",
+  "multimodal_feature_dim": 92,
+  "train_samples": 2533,
+  "test_samples": 1086,
+  "ensemble_binary_metrics": {
+    "accuracy": 0.9861878453038674,
+    "balanced_accuracy": 0.9861314611314611,
+    "precision": 0.9766606822262118,
+    "recall": 0.9963369963369964,
+    "macro_f1": 0.9861844599345098,
+    "roc_auc": 0.9983991317324651
+  },
+  "ensemble_4class_metrics": {
+    "accuracy": 0.9502762430939227,
+    "macro_f1": 0.9429517381427184
+  },
+  "standalone_gate_comparison": {
+    "gate1_visual": {
+      "accuracy": 0.8177874186550976,
+      "macro_f1": 0.8076160667709964,
+      "roc_auc": 0.828272810137104
+    },
+    "gate2_linguistic": {
+      "accuracy": 0.9834254143646409,
+      "macro_f1": 0.9834240089002253,
+      "roc_auc": 0.9980226563559897
+    },
+    "gate3_relational": {
+      "accuracy": 0.9465930018416207,
+      "macro_f1": 0.9465574760820354,
+      "roc_auc": 0.9914122914122914
+    },
+    "trustfusion_fusion": {
+      "accuracy": 0.9861878453038674,
+      "macro_f1": 0.9861844599345098,
+      "roc_auc": 0.9983991317324651
+    }
+  },
+  "cold_start_policy": "When M_visual=0, alpha_vis forced to 0.0, dynamically normalizing attention across remaining gates."
+}

@@ -1,0 +1,382 @@
+{
+  "project": "TrustFusion Step 6: Multi-Modal SHAP Explainability Suite",
+  "num_decision_features": 28,
+  "num_test_profiles_explained": 1086,
+  "base_expected_value": 0.05371851736932606,
+  "top_10_global_features": [
+    {
+      "rank": 1,
+      "feature_index": 1,
+      "feature_name": "Linguistic Risk Score (Gate 2)",
+      "mean_abs_shap": 4.060419082641602,
+      "relative_importance_pct": 53.94174575805664
+    },
+    {
+      "rank": 2,
+      "feature_index": 2,
+      "feature_name": "Relational Risk Score (Gate 3)",
+      "mean_abs_shap": 2.6266257762908936,
+      "relative_importance_pct": 34.894126892089844
+    },
+    {
+      "rank": 3,
+      "feature_index": 0,
+      "feature_name": "Visual Risk Score (Gate 1)",
+      "mean_abs_shap": 0.181987926363945,
+      "relative_importance_pct": 2.417668104171753
+    },
+    {
+      "rank": 4,
+      "feature_index": 9,
+      "feature_name": "Louvain Co-occurrence Degree (log1p)",
+      "mean_abs_shap": 0.08790429681539536,
+      "relative_importance_pct": 1.1677886247634888
+    },
+    {
+      "rank": 5,
+      "feature_index": 26,
+      "feature_name": "Connections Count",
+      "mean_abs_shap": 0.08765789866447449,
+      "relative_importance_pct": 1.1645152568817139
+    },
+    {
+      "rank": 6,
+      "feature_index": 24,
+      "feature_name": "Number of Interests",
+      "mean_abs_shap": 0.05845051258802414,
+      "relative_importance_pct": 0.7765017747879028
+    },
+    {
+      "rank": 7,
+      "feature_index": 16,
+      "feature_name": "Number of Recommendations",
+      "mean_abs_shap": 0.054802361875772476,
+      "relative_importance_pct": 0.7280369400978088
+    },
+    {
+      "rank": 8,
+      "feature_index": 15,
+      "feature_name": "Number of Skills",
+      "mean_abs_shap": 0.044073011726140976,
+      "relative_importance_pct": 0.5854999423027039
+    },
+    {
+      "rank": 9,
+      "feature_index": 11,
+      "feature_name": "Number of Experiences",
+      "mean_abs_shap": 0.0430789515376091,
+      "relative_importance_pct": 0.5722941160202026
+    },
+    {
+      "rank": 10,
+      "feature_index": 10,
+      "feature_name": "Louvain Weighted Connectivity (log1p)",
+      "mean_abs_shap": 0.033259037882089615,
+      "relative_importance_pct": 0.44183874130249023
+    }
+  ],
+  "exemplar_case_studies": [
+    {
+      "archetype": "Legitimate Executive",
+      "profile_id": "TF_ac29c8fbb6535468",
+      "ground_truth": "legitimate",
+      "description": "Real face, clean linguistic tone, organic network",
+      "final_risk_score": 0.01479905806208404,
+      "top_risk_drivers": [
+        {
+          "feature_name": "Relational Risk Score (Gate 3)",
+          "feature_value": 0.01718873158097267,
+          "shap_value": 0.4357093870639801,
+          "impact": "INCREASES_FRAUD_RISK"
+        },
+        {
+          "feature_name": "Number of Recommendations",
+          "feature_value": 0.0,
+          "shap_value": 0.03696721792221069,
+          "impact": "INCREASES_FRAUD_RISK"
+        },
+        {
+          "feature_name": "Number of Licenses",
+          "feature_value": 0.0,
+          "shap_value": 0.015774603933095932,
+          "impact": "INCREASES_FRAUD_RISK"
+        },
+        {
+          "feature_name": "Louvain Weighted Connectivity (log1p)",
+          "feature_value": 3.526360511779785,
+          "shap_value": 0.015174412168562412,
+          "impact": "INCREASES_FRAUD_RISK"
+        },
+        {
+          "feature_name": "Number of Activities",
+          "feature_value": 0.1315789520740509,
+          "shap_value": 0.014623425900936127,
+          "impact": "INCREASES_FRAUD_RISK"
+        }
+      ],
+      "top_protective_factors": [
+        {
+          "feature_name": "Linguistic Risk Score (Gate 2)",
+          "feature_value": 3.6939258279744536e-05,
+          "shap_value": -4.56982421875,
+          "impact": "DECREASES_FRAUD_RISK"
+        },
+        {
+          "feature_name": "Visual Risk Score (Gate 1)",
+          "feature_value": 3.887783532263711e-05,
+          "shap_value": -0.18195532262325287,
+          "impact": "DECREASES_FRAUD_RISK"
+        },
+        {
+          "feature_name": "Connections Count",
+          "feature_value": 0.3333333432674408,
+          "shap_value": -0.0749688372015953,
+          "impact": "DECREASES_FRAUD_RISK"
+        },
+        {
+          "feature_name": "Number of Experiences",
+          "feature_value": 0.47058823704719543,
+          "shap_value": -0.04622621461749077,
+          "impact": "DECREASES_FRAUD_RISK"
+        },
+        {
+          "feature_name": "Number of Skills",
+          "feature_value": 0.6000000238418579,
+          "shap_value": -0.04539524391293526,
+          "impact": "DECREASES_FRAUD_RISK"
+        }
+      ],
+      "linguistic_triggers": {
+        "text_sample": "Experienced Regional Manager with a demonstrated history of working in the real estate industry. Skilled in Apartments, ...",
+        "triggers_found": [],
+        "trigger_count": 0,
+        "has_high_risk_triggers": false
+      }
+    },
+    {
+      "archetype": "ChatGPT Recruiter Fake",
+      "profile_id": "TF_ccd74509dfc347e4",
+      "ground_truth": "chatgpt_fake",
+      "description": "StyleGAN headshot, synthetic prose, isolated graph",
+      "final_risk_score": 0.9996145145949624,
+      "top_risk_drivers": [
+        {
+          "feature_name": "Linguistic Risk Score (Gate 2)",
+          "feature_value": 0.9999973773956299,
+          "shap_value": 3.8832643032073975,
+          "impact": "INCREASES_FRAUD_RISK"
+        },
+        {
+          "feature_name": "Relational Risk Score (Gate 3)",
+          "feature_value": 0.9999717473983765,
+          "shap_value": 2.9848523139953613,
+          "impact": "INCREASES_FRAUD_RISK"
+        },
+        {
+          "feature_name": "Visual Risk Score (Gate 1)",
+          "feature_value": 0.9999921321868896,
+          "shap_value": 0.2672349810600281,
+          "impact": "INCREASES_FRAUD_RISK"
+        },
+        {
+          "feature_name": "Connections Count",
+          "feature_value": 0.0020000000949949026,
+          "shap_value": 0.17523093521595,
+          "impact": "INCREASES_FRAUD_RISK"
+        },
+        {
+          "feature_name": "Louvain Co-occurrence Degree (log1p)",
+          "feature_value": 0.0,
+          "shap_value": 0.10301557928323746,
+          "impact": "INCREASES_FRAUD_RISK"
+        }
+      ],
+      "top_protective_factors": [
+        {
+          "feature_name": "Linguistic Attention Weight (alpha_ling)",
+          "feature_value": 0.32683491706848145,
+          "shap_value": -0.013171412982046604,
+          "impact": "DECREASES_FRAUD_RISK"
+        },
+        {
+          "feature_name": "Louvain Community Bucket",
+          "feature_value": 0.8299999833106995,
+          "shap_value": -0.0072995699010789394,
+          "impact": "DECREASES_FRAUD_RISK"
+        },
+        {
+          "feature_name": "Visual Attention Weight (alpha_vis)",
+          "feature_value": 0.34097200632095337,
+          "shap_value": -0.002655178774148226,
+          "impact": "DECREASES_FRAUD_RISK"
+        },
+        {
+          "feature_name": "Number of Educations",
+          "feature_value": 1.0,
+          "shap_value": -0.00257999449968338,
+          "impact": "DECREASES_FRAUD_RISK"
+        }
+      ],
+      "linguistic_triggers": {
+        "text_sample": "{'chatGPT': '1. Results-driven professional with over a decade of experience in human resources management. Proven abili...",
+        "triggers_found": [],
+        "trigger_count": 0,
+        "has_high_risk_triggers": false
+      }
+    },
+    {
+      "archetype": "Manual Phishing Impersonator",
+      "profile_id": "TF_89284f468c65731b",
+      "ground_truth": "manual_fake",
+      "description": "Logo impersonation, urgency cues, low history",
+      "final_risk_score": 0.9993181388312229,
+      "top_risk_drivers": [
+        {
+          "feature_name": "Linguistic Risk Score (Gate 2)",
+          "feature_value": 0.9997027516365051,
+          "shap_value": 4.031386852264404,
+          "impact": "INCREASES_FRAUD_RISK"
+        },
+        {
+          "feature_name": "Relational Risk Score (Gate 3)",
+          "feature_value": 0.9999995231628418,
+          "shap_value": 3.161428928375244,
+          "impact": "INCREASES_FRAUD_RISK"
+        },
+        {
+          "feature_name": "Number of Interests",
+          "feature_value": 0.125,
+          "shap_value": 0.08301670849323273,
+          "impact": "INCREASES_FRAUD_RISK"
+        },
+        {
+          "feature_name": "Number of Skills",
+          "feature_value": 0.0,
+          "shap_value": 0.07282102108001709,
+          "impact": "INCREASES_FRAUD_RISK"
+        },
+        {
+          "feature_name": "Number of Experiences",
+          "feature_value": 0.05882352963089943,
+          "shap_value": 0.05650191381573677,
+          "impact": "INCREASES_FRAUD_RISK"
+        }
+      ],
+      "top_protective_factors": [
+        {
+          "feature_name": "Visual Risk Score (Gate 1)",
+          "feature_value": 0.9993098974227905,
+          "shap_value": -0.10943744331598282,
+          "impact": "DECREASES_FRAUD_RISK"
+        },
+        {
+          "feature_name": "Louvain Co-occurrence Degree (log1p)",
+          "feature_value": 5.564520359039307,
+          "shap_value": -0.09405843168497086,
+          "impact": "DECREASES_FRAUD_RISK"
+        },
+        {
+          "feature_name": "Louvain Weighted Connectivity (log1p)",
+          "feature_value": 5.58349609375,
+          "shap_value": -0.05104246735572815,
+          "impact": "DECREASES_FRAUD_RISK"
+        },
+        {
+          "feature_name": "Louvain Cluster Size (log1p)",
+          "feature_value": 5.837730407714844,
+          "shap_value": -0.04001639783382416,
+          "impact": "DECREASES_FRAUD_RISK"
+        },
+        {
+          "feature_name": "Visual Attention Weight (alpha_vis)",
+          "feature_value": 0.37880054116249084,
+          "shap_value": -0.030758744105696678,
+          "impact": "DECREASES_FRAUD_RISK"
+        }
+      ],
+      "linguistic_triggers": {
+        "text_sample": "A market research manager from Singapore who likes to network and make new friends. Love travel, beach, wine, nature and...",
+        "triggers_found": [],
+        "trigger_count": 0,
+        "has_high_risk_triggers": false
+      }
+    },
+    {
+      "archetype": "Cold-Start Account (No Photo)",
+      "profile_id": "TF_be4ecb78eebc777b",
+      "ground_truth": "chatgpt_fake",
+      "description": "Visual alpha strictly 0.0, attention redistributed to language and graph",
+      "final_risk_score": 0.9991308498881577,
+      "top_risk_drivers": [
+        {
+          "feature_name": "Linguistic Risk Score (Gate 2)",
+          "feature_value": 0.9999986886978149,
+          "shap_value": 4.403123378753662,
+          "impact": "INCREASES_FRAUD_RISK"
+        },
+        {
+          "feature_name": "Relational Risk Score (Gate 3)",
+          "feature_value": 0.9998874664306641,
+          "shap_value": 2.9047048091888428,
+          "impact": "INCREASES_FRAUD_RISK"
+        },
+        {
+          "feature_name": "Louvain Co-occurrence Degree (log1p)",
+          "feature_value": 0.0,
+          "shap_value": 0.10989569127559662,
+          "impact": "INCREASES_FRAUD_RISK"
+        },
+        {
+          "feature_name": "Number of Interests",
+          "feature_value": 0.375,
+          "shap_value": 0.06347992271184921,
+          "impact": "INCREASES_FRAUD_RISK"
+        },
+        {
+          "feature_name": "Number of Recommendations",
+          "feature_value": 0.0,
+          "shap_value": 0.04481060802936554,
+          "impact": "INCREASES_FRAUD_RISK"
+        }
+      ],
+      "top_protective_factors": [
+        {
+          "feature_name": "Number of Organizations",
+          "feature_value": 1.0,
+          "shap_value": -0.11048135161399841,
+          "impact": "DECREASES_FRAUD_RISK"
+        },
+        {
+          "feature_name": "Number of Languages",
+          "feature_value": 1.0,
+          "shap_value": -0.10645290464162827,
+          "impact": "DECREASES_FRAUD_RISK"
+        },
+        {
+          "feature_name": "Number of Volunteering",
+          "feature_value": 1.0,
+          "shap_value": -0.08898955583572388,
+          "impact": "DECREASES_FRAUD_RISK"
+        },
+        {
+          "feature_name": "Visual Risk Score (Gate 1)",
+          "feature_value": 0.15000000596046448,
+          "shap_value": -0.08392374217510223,
+          "impact": "DECREASES_FRAUD_RISK"
+        },
+        {
+          "feature_name": "Number of Activities",
+          "feature_value": 0.7368420958518982,
+          "shap_value": -0.06404868513345718,
+          "impact": "DECREASES_FRAUD_RISK"
+        }
+      ],
+      "linguistic_triggers": {
+        "text_sample": "{'chatGPT': '1. \"I am an experienced human resources professional with a track record of success in driving organization...",
+        "triggers_found": [],
+        "trigger_count": 0,
+        "has_high_risk_triggers": false
+      }
+    }
+  ]
+}

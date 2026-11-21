@@ -1,3 +1,13 @@
+---
+title: TrustFusion Multi-Modal Identity Verification
+emoji: 🛡️
+colorFrom: indigo
+colorTo: teal
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
 # TrustFusion
 A Multi-Modal AI Middleware for Initial-Access Protection & Identity Verification on LinkedIn
 
