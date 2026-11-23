@@ -140,7 +140,7 @@ Unlike legacy single-modality filters, TrustFusion uses a **3-Gate Security Pipe
     - GET /api/v1/profiles: Fast catalog of exemplar benchmark profiles (Authentic Exec, ChatGPT Bot, Phishing Impersonator, Cold-Start Profile) and test set lookup.
     - GET /api/v1/benchmarks: Global gate ablation matrix, test set confusion matrix, and top-10 global SHAP feature ranking.
   - **Interactive Cyber-SOC Single-Page Dashboard (/dashboard):** Built-in dark glassmorphism cybersecurity dashboard with live gauges, preset selector, real-time SHAP waterfall bars, and 2-hop Sybil network visualizer directly accessible via browser.
-* **Serving Latency:** **< 3ms per profile** on RTX 4050 / Modern CPU.
+* **Serving Latency:** **< 3ms per profile** on RTX 4050 / Modern CPU(Central Processing Unit).
 
 ---
 
